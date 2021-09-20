@@ -38,7 +38,7 @@ class _MainState extends State<Main> {
     }
   }
 
-  Future updateUserInfo(String userIdInput) async {
+  Future requestLogIn(String userIdInput) async {
     setState(() {
       loginStatus = "inProgress";
     });
@@ -57,10 +57,21 @@ class _MainState extends State<Main> {
     });
   }
 
+  Future requestLogOut() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return Future.delayed(const Duration(seconds: 2), () {
+      // success라고 가정
+      prefs.remove("user_id");
+      setState(() {
+        isLoggedIn = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: !isLoggedIn ? Login(updateUserInfo, loginStatus) : const App(),
+      home: !isLoggedIn ? Login(requestLogIn, loginStatus) : App(requestLogOut),
     );
   }
 }

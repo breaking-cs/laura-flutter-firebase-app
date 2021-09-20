@@ -5,7 +5,10 @@ import "./gallery.dart";
 import "./settings.dart";
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  final Function requestLogOut;
+
+  // ignore: use_key_in_widget_constructors
+  const App(this.requestLogOut);
 
   @override
   State<App> createState() => _AppState();
@@ -27,6 +30,15 @@ class _AppState extends State<App> {
         appBar: AppBar(
           title: const Text("Laura"),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Open shopping cart',
+              onPressed: () {
+                widget.requestLogOut();
+              },
+            ),
+          ],
         ),
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(

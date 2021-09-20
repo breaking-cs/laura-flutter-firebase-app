@@ -1,13 +1,12 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
-  final Function updateUserInfo;
-  String loginStatus;
+  final Function requestLogIn;
+  final String loginStatus;
 
-  Login(this.updateUserInfo, this.loginStatus);
+  // ignore: use_key_in_widget_constructors
+  const Login(this.requestLogIn, this.loginStatus);
 
   @override
   State<Login> createState() => _LoginState();
@@ -20,7 +19,7 @@ class _LoginState extends State<Login> {
   Future? _loginFuture;
 
   loginUser() async {
-    await widget.updateUserInfo(_userId.text);
+    await widget.requestLogIn(_userId.text);
 
     _userId.clear();
     _userPassword.clear();
