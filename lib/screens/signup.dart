@@ -5,6 +5,6 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("SignUp");
+    return Scaffold(body: Text("SignUp"));
   }
 }

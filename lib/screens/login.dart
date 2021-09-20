@@ -1,13 +1,13 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
-  static Route<dynamic> route() {
-    return MaterialPageRoute(
-      builder: (BuildContext context) => const Login(),
-    );
-  }
+  final Function updateUserInfo;
+  String loginStatus;
 
-  const Login({Key? key}) : super(key: key);
+  Login(this.updateUserInfo, this.loginStatus);
 
   @override
   State<Login> createState() => _LoginState();
@@ -19,8 +19,17 @@ class _LoginState extends State<Login> {
   final _userPassword = TextEditingController();
   Future? _loginFuture;
 
+  loginUser() async {
+    await widget.updateUserInfo(_userId.text);
+
+    _userId.clear();
+    _userPassword.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // TODO: InProgress, Failed일때 처리 해줘야함
+    print(widget.loginStatus);
     return Scaffold(
       body: SafeArea(
         child: SizedBox.expand(
@@ -66,7 +75,7 @@ class _LoginState extends State<Login> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
-                                onPressed: null,
+                                onPressed: loginUser,
                                 child: const Text('LOGIN'),
                               ),
                               ElevatedButton(
