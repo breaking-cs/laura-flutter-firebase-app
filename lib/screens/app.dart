@@ -30,6 +30,7 @@ class _AppState extends State<App> {
         appBar: AppBar(
           title: const Text("Laura"),
           centerTitle: true,
+          backgroundColor: Theme.of(context).primaryColor,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.logout),
@@ -43,22 +44,31 @@ class _AppState extends State<App> {
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
+            selectedItemColor: Theme.of(context).primaryColor,
             currentIndex: _currentIndex,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                  Icons.home,
+                ),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
+                icon: Icon(
+                  Icons.account_circle,
+                ),
                 label: "Customers",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.camera),
+                icon: Icon(
+                  Icons.camera,
+                ),
                 label: "Gallery",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                ),
                 label: "Settings",
               ),
             ],

@@ -71,7 +71,16 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: !isLoggedIn ? Login(requestLogIn, loginStatus) : App(requestLogOut),
+      home: false ? Login(requestLogIn, loginStatus) : App(requestLogOut),
+      theme: ThemeData(
+        primaryColor: Colors.indigo,
+        textTheme: TextTheme(
+          bodyText1: const TextStyle(color: Colors.teal, fontSize: 30),
+          bodyText2: TextStyle(color: Colors.yellow.shade800, fontSize: 20),
+          subtitle1: const TextStyle(
+              color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 }
