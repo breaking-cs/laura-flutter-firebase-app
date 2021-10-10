@@ -38,7 +38,7 @@ class _MainState extends State<Main> {
     }
   }
 
-  void requestLogIn(String userIdInput) async {
+  Future requestLogIn(String userIdInput) async {
     setState(() {
       loginStatus = "inProgress";
     });
@@ -46,7 +46,7 @@ class _MainState extends State<Main> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //  TODO: 여기서 api 처리해줘야함, 에러처리도 여기서 해야할듯, 에러인 경우 error status를 보내줘야함
     // TODO 비동기 처리하고, isLogInFailed, 를 내려주는 방식으로 일단 가쟝
-    Future.delayed(const Duration(seconds: 2), () {
+    return Future.delayed(const Duration(seconds: 2), () {
       // success라고 가정
       prefs.setString('user_id', userIdInput);
       setState(() {
@@ -57,15 +57,14 @@ class _MainState extends State<Main> {
     });
   }
 
-  Future<void> requestLogOut() async {
+  Future requestLogOut() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Future.delayed(const Duration(seconds: 2), () {
+    return Future.delayed(const Duration(seconds: 2), () {
       // success라고 가정
       prefs.remove("user_id");
       setState(() {
         isLoggedIn = false;
       });
-      return "Hello";
     });
   }
 
