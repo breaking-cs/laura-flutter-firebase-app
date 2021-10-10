@@ -5,6 +5,16 @@ class Customers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Customers");
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Customers",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
+    );
   }
 }

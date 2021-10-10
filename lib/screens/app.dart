@@ -1,15 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import "./home.dart";
 import "./customers.dart";
 import "./gallery.dart";
 import "./settings.dart";
 
 class App extends StatefulWidget {
-  final Function requestLogOut;
-
-  // ignore: use_key_in_widget_constructors
-  const App(this.requestLogOut);
-
   @override
   State<App> createState() => _AppState();
 }
@@ -27,19 +24,6 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Laura"),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.logout),
-              tooltip: 'Open shopping cart',
-              onPressed: () {
-                widget.requestLogOut();
-              },
-            ),
-          ],
-        ),
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -66,6 +50,8 @@ class _AppState extends State<App> {
               setState(() {
                 _currentIndex = index;
               });
-            }));
+            }
+        ),
+    );
   }
 }
