@@ -15,9 +15,9 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
-  final _tabs = const [
+  final _tabs = [
     Center(child: Home()),
     Center(child: Customers()),
     Center(child: Gallery()),

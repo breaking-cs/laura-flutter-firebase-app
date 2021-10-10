@@ -1,10 +1,10 @@
 class Transaction {
-  final String id; // transaction id
-  final String customerId;
+  final int id; // transaction id
+  final int customerId;
   final int amount;
   final DateTime date;
-  String memo;
-  String imgUrl;
+  final String memo;
+  final String imgUrl;
 
   Transaction({
     required this.id,
