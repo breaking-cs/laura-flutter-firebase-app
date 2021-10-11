@@ -1,7 +1,7 @@
 import 'package:app/models/transaction.dart';
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import '../components/transaction_item.dart';
+import '../components/gallery_item.dart';
 import "../components/custom_app_bar.dart";
 
 class Gallery extends StatelessWidget {
@@ -18,6 +18,10 @@ class Gallery extends StatelessWidget {
     ),
   );
 
+  String formatDate(DateTime tx) {
+    return "${tx.year.toString()}년 ${tx.month.toString()}월 ${tx.day.toString()}일";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,10 @@ class Gallery extends StatelessWidget {
         ),
         itemCount: transactions.length,
         itemBuilder: (ctx, index) {
-          return TransactionItem(tx: transactions[index]);
+          return GalleryItem(
+            title: formatDate(transactions[index].date),
+            imgUrl: transactions[index].imgUrl,
+          );
         },
       ),
     );
