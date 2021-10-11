@@ -2,6 +2,7 @@ import 'package:app/models/transaction.dart';
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import '../components/transaction_item.dart';
+import "../components/custom_app_bar.dart";
 
 class Gallery extends StatelessWidget {
   Gallery({Key? key}) : super(key: key);
@@ -19,17 +20,20 @@ class Gallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 5,
+    return Scaffold(
+      appBar: const CustomAppBar(title: "Gallery"),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(10),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 5,
+        ),
+        itemCount: transactions.length,
+        itemBuilder: (ctx, index) {
+          return TransactionItem(tx: transactions[index]);
+        },
       ),
-      itemCount: transactions.length,
-      itemBuilder: (ctx, index) {
-        return TransactionItem(tx: transactions[index]);
-      },
     );
   }
 }

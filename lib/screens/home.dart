@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "../components/custom_app_bar.dart";
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -62,31 +63,34 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(
-            top: 20,
-            bottom: 20,
-          ),
-          padding: const EdgeInsets.all(20.0),
-          child: const Text("Hello!"),
-        ),
-        Expanded(
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
+    return Scaffold(
+      appBar: const CustomAppBar(title: "Home"),
+      body: Column(
+        children: <Widget>[
+          Container(
             margin: const EdgeInsets.only(
-              bottom: 30,
-              left: 10,
-              right: 10,
+              top: 20,
+              bottom: 20,
             ),
-            child: const HomeCard(),
-            elevation: 5,
+            padding: const EdgeInsets.all(20.0),
+            child: const Text("Hello!"),
           ),
-        ),
-      ],
+          Expanded(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              margin: const EdgeInsets.only(
+                bottom: 30,
+                left: 10,
+                right: 10,
+              ),
+              child: const HomeCard(),
+              elevation: 5,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "../components/custom_app_bar.dart";
 
 class TransactionDetail extends StatelessWidget {
   static const routeName = '/tx_detail';
@@ -11,11 +12,7 @@ class TransactionDetail extends StatelessWidget {
     final id = routeArgs['id'];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Laura"),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: CustomAppBar(title: "구매 내역"),
       body: Text("Hello ${id.toString()}"),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "../components/custom_app_bar.dart";
 
 class Customers extends StatelessWidget {
   const Customers({Key? key}) : super(key: key);
@@ -6,11 +7,7 @@ class Customers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Customers"),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: const CustomAppBar(title: "Customers"),
       body: Column(
         children: [
           Text("Welcome"),
