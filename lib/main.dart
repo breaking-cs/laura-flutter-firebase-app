@@ -1,3 +1,4 @@
+import 'package:app/screens/transaction_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "./screens/app.dart";
@@ -71,16 +72,19 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: isLoggedIn ? Login(requestLogIn, loginStatus) : App(requestLogOut),
-      theme: ThemeData(
-        primaryColor: Colors.indigo,
-        textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
-          bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
-          subtitle1: TextStyle(
-              color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
+        home:
+            isLoggedIn ? Login(requestLogIn, loginStatus) : App(requestLogOut),
+        theme: ThemeData(
+          primaryColor: Colors.indigo,
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
+            bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
+            subtitle1: TextStyle(
+                color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-    );
+        routes: {
+          TransactionDetail.routeName: (context) => const TransactionDetail(),
+        });
   }
 }
