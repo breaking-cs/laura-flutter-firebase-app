@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import "../components/custom_app_bar.dart";
 
-class TransactionDetail extends StatelessWidget {
-  static const routeName = '/tx_detail';
-  const TransactionDetail({Key? key}) : super(key: key);
+class CustomersTransaction extends StatelessWidget {
+  static const routeName = '/customers_tx';
+  const CustomersTransaction({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

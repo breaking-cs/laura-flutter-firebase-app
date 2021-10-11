@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "../components/custom_app_bar.dart";
+import "../screens/customers_tx.dart";
 
 class Customers extends StatelessWidget {
   const Customers({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class Customers extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  "/tx_detail",
+                  CustomersTransaction.routeName,
                   arguments: {'id': 1},
                 );
               },

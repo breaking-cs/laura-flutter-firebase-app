@@ -1,4 +1,4 @@
-import 'package:app/screens/transaction_detail.dart';
+import 'package:app/screens/customers_tx.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "./screens/app.dart";
@@ -84,7 +84,8 @@ class _MainState extends State<Main> {
           ),
         ),
         routes: {
-          TransactionDetail.routeName: (context) => const TransactionDetail(),
+          CustomersTransaction.routeName: (context) =>
+              const CustomersTransaction(),
         });
   }
 }
