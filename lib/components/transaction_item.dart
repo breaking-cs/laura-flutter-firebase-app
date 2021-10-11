@@ -15,6 +15,22 @@ class TransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridTile(
+      footer: Container(
+        decoration: const BoxDecoration(
+          color: Colors.grey,
+        ),
+        alignment: Alignment.bottomRight,
+        padding: const EdgeInsets.only(
+          right: 10,
+        ),
+        child: Text(
+          formatDate(tx.date),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
+        ),
+      ),
       child: Image.network(tx.imgUrl),
     );
   }
