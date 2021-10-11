@@ -15,23 +15,19 @@ class TransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridTile(
-      footer: Container(
-        decoration: const BoxDecoration(
-          color: Colors.grey,
-        ),
-        alignment: Alignment.bottomRight,
-        padding: const EdgeInsets.only(
-          right: 10,
-        ),
-        child: Text(
+      footer: GridTileBar(
+        backgroundColor: Colors.black54,
+        // leading: IconButton(icon: Icon(Icons.favorite), onPressed: null),
+        // trailing: IconButton(icon: Icon(Icons.shopping_cart), onPressed: null),
+        title: Text(
           formatDate(tx.date),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
+          textAlign: TextAlign.center,
         ),
       ),
-      child: Image.network(tx.imgUrl),
+      child: Image.network(
+        tx.imgUrl,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
