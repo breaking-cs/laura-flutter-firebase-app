@@ -26,21 +26,8 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    // Todo: https://www.youtube.com/watch?v=qj7jcuU2Z10 Navigation component 구성
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Laura"),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.logout),
-              tooltip: 'Open shopping cart',
-              onPressed: () {
-                widget.requestLogOut();
-              },
-            ),
-          ],
-        ),
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

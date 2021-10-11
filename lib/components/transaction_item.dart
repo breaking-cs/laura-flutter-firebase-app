@@ -24,17 +24,9 @@ class TransactionItem extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            "/tx_detail",
-            arguments: {'id': tx.id},
-          );
-        },
-        child: Image.network(
-          tx.imgUrl,
-          fit: BoxFit.cover,
-        ),
+      child: Image.network(
+        tx.imgUrl,
+        fit: BoxFit.cover,
       ),
     );
   }
