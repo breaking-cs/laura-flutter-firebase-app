@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/auth_service.dart';
+import './app.dart';
 
 class EmailSignIn extends StatefulWidget {
-  /*
-  final Function requestLogIn;
-  final String loginStatus;
+  const EmailSignIn({Key? key}) : super(key: key);
 
-  // ignore: use_key_in_widget_constructors
-  const EmailSignIn(this.requestLogIn, this.loginStatus);
+  /*
+  final bool isLoggedIn;
+  const EmailSignIn(this.isLoggedIn);
    */
 
   @override
@@ -17,47 +18,56 @@ class EmailSignIn extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignIn> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  final _userId = TextEditingController();
+  final _userEmail = TextEditingController();
   final _userPassword = TextEditingController();
-  late String _email, _passwaord;
+  //late bool isLoggedIn;
+  late String loginStatus;
   Future? _loginFuture;
+  String? userId;
 
-  loginUser() async {
-    //await widget.requestLogIn(_userId.text);
+  Future<void> requestLogIn() async {
+    setState(() {
+      loginStatus = "inProgress";
+    });
 
-    _userId.clear();
-    _userPassword.clear();
-  }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    //  TODO: 여기서 api 처리해줘야함, 에러처리도 여기서 해야할듯, 에러인 경우 error status를 보내줘야함
+    // TODO 비동기 처리하고, isLogInFailed, 를 내려주는 방식으로 일단 가쟝
+    // success라고 가정
+    prefs.setString('user_id', _userEmail.text.trim());
 
-  Future signInWithEmail(String email, String password) async {
-    try{
-      UserCredential user = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+    await Authentication.signInWithEmail(
+        _userEmail.text.trim(),_userPassword.text.trim())
+        .then((result) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const App()),
+        //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
       );
-      return "Sign in";
-    } on FirebaseAuthException catch (e) {
-      return e.message;
     }
+    );
+
+    setState(() {
+      //isLoggedIn = true;
+      userId = _userEmail.text.trim();
+      loginStatus = "success";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: InProgress, Failed일때 처리 해줘야함
-    //print(widget.loginStatus);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Sign In",
+        title: const Text("Sign In",
         style: TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
     ),
-    extendBodyBehindAppBar: true,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
@@ -76,38 +86,61 @@ class _EmailSignInState extends State<EmailSignIn> {
                     child: Column(
                         children: <Widget>[
                           TextFormField(
-                            controller: _userId,
+                            controller: _userEmail,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
-                              labelText: 'Email',
+                              labelText: 'Enter your email address',
+                              suffixIcon: Icon(
+                                Icons.email,
+                              ),
                             ),
-                            // validator: _validateEmail,
+                            validator: (input) {
+                              if (input!.isEmpty) {
+                                return 'Enter your email address';
+                              } else if (!input.contains('@')) {
+                                return 'Please enter a valid email address!';
+                              }
+                              return null;
+                            },
                           ),
                           TextFormField(
                             controller: _userPassword,
                             obscureText: true,
                             decoration: const InputDecoration(
-                              labelText: 'Password',
+                              labelText: 'Enter your password',
+                              suffixIcon: Icon(
+                                Icons.lock,
+                              ),
                             ),
-                            // validator: _validatePassword,
+                            validator: (input) {
+                              if (input!.isEmpty) {
+                                return 'Enter your password';
+                              } else if (input.length < 6) {
+                                return 'Password must be at least 6 characters!';
+                              }
+                              return null;
+                            },
                           ),
                           const SizedBox(height: 16.0),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.all(10),
                           ),
-                          RaisedButton(
-                            padding: EdgeInsets.fromLTRB(80, 15, 80, 15),
-                            color: Colors.indigo,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:BorderRadiusDirectional.circular(10),
-                            ),
-                            onPressed: (){
-                                    // signUpWithEmail();
-                            },
-                            child: Text("LOGIN",
-                              style: TextStyle(
-                                  color: Colors.white,
+                          IconsButton(
+                              padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+                              text: 'LOGIN',
+                              color: Colors.indigo,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadiusDirectional.circular(10),
+                              ),
+                              textStyle: const TextStyle(color: Colors.white,
                                   fontSize: 20),
-                            ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  requestLogIn();
+                                }
+                              }
                           ),
                         ],
                       ),

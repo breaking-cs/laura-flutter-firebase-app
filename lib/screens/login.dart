@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './email_signup.dart';
 import './email_signin.dart';
 import './app.dart';
+import '../utils/auth_service.dart';
 
 class Login extends StatefulWidget{
   const Login({Key? key}) : super(key: key);
+
+  /*
+  final bool isLoggedIn;
+  const Login(this.isLoggedIn);
+   */
 
   @override
   _LoginState createState() => _LoginState();
@@ -16,41 +21,31 @@ class Login extends StatefulWidget{
 
 class _LoginState extends State<Login>{
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  //late bool isLoggedIn;
+  String loginStatus = ""; // inProgress, failed, success
+  String? userId;
+  User? user;
 
-  Future<void> checkAuthentication() async{
-    _auth.authStateChanges().listen((user){
-      if(user != null){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => App()),
-        );
-      }
-    });
+
+  Future<void> autoLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userIdStorage = prefs.getString('user_id');
+    User? currentUser= FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      setState(() {
+        //isLoggedIn = true;
+        user = currentUser;
+        userId = userIdStorage;
+      });
+      return;
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    this.checkAuthentication();
-  }
-
-  Future<User?> signInWithGoogle() async {
-    final GoogleSignInAccount? account = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuthentication = await account!.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-        idToken: googleAuthentication.idToken,
-        accessToken: googleAuthentication.accessToken
-    );
-
-    final UserCredential authResult = await _auth.signInWithCredential(credential);
-    final User? user = authResult.user;
-
-    assert(!user!.isAnonymous);
-    assert(await user!.getIdToken() != null);
-
-    return user;
+    autoLogIn();
   }
 
   @override
@@ -63,19 +58,19 @@ class _LoginState extends State<Login>{
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text("LAURA",
+              child: Text('LAURA',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40),
+                    color: Colors.white,
+                    fontSize: 40),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text("FOR YOUR ONE AND ONLY,\nFLOWER SHOP",
+              child: Text('FOR YOUR ONE AND ONLY,\nFLOWER SHOP',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20),
+                    color: Colors.white,
+                    fontSize: 20),
               ),
             ),
             Padding(
@@ -92,29 +87,32 @@ class _LoginState extends State<Login>{
                       onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EmailSignIn()),
+                          MaterialPageRoute(builder: (context) => const EmailSignIn()),
+                          //MaterialPageRoute(builder: (context) => EmailSignIn(isLoggedIn)),
                         );
                       }
                   ),
                   SignInButton(
-                    Buttons.Google,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    onPressed: () async {
-                      try{
-                        var user = await signInWithGoogle();
-                        // requestLogIn("$user");
-                      }catch (e) {
-
-                      }
-                    }
+                      Buttons.Google,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () async {
+                        await Authentication.signInWithGoogle().then((result) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const App()),
+                            //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
+                          );
+                        });
+                      },
                   ),
                 ],
               ),
             ),
             GestureDetector(
-              child: Text("Don't have an accout? SIGN UP!",
+              child: const Text("Don't have an account? SIGN UP!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
@@ -124,7 +122,8 @@ class _LoginState extends State<Login>{
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EmailSignUp()),
+                  MaterialPageRoute(builder: (context) => const EmailSignUp()),
+                  //MaterialPageRoute(builder: (context) => EmailSignUp(isLoggedIn)),
                 );
               },
             ),
