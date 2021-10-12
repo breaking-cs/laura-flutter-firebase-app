@@ -13,10 +13,11 @@ void main() async {
 
 class Main extends StatelessWidget {
   User? currentUser = FirebaseAuth.instance.currentUser;
-  //bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
+    bool isLoggedIn = currentUser == null;
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -27,8 +28,7 @@ class Main extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
       ),
-      // home: !isLoggedIn ? Login(isLoggedIn) : App(isLoggedIn),
-      home: (currentUser == null) ? const Login() : const App(),
+      home: isLoggedIn ? const Login() : const App(),
     );
   }
 }
