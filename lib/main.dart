@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "./screens/login.dart";
 import "./screens/app.dart";
+import './screens/customers_tx.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +25,21 @@ class Main extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      title: 'Laura',
-      theme: ThemeData(
-        fontFamily: 'OpenSans',
-      ),
-      home: isLoggedIn ? const Login() : const App(),
-    );
+        title: 'Laura',
+        theme: ThemeData(
+          fontFamily: 'OpenSans',
+          primaryColor: Colors.indigo,
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
+            bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
+            subtitle1: TextStyle(
+                color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
+          ),
+        ),
+        home: isLoggedIn ? const Login() : const App(),
+        routes: {
+          CustomersTransaction.routeName: (context) =>
+              const CustomersTransaction(),
+        });
   }
 }

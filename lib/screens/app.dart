@@ -17,9 +17,9 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
-  final _tabs = const [
+  final _tabs = [
     Center(child: Home()),
     Center(child: Customers()),
     Center(child: Gallery()),
@@ -29,39 +29,44 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    // Todo: https://www.youtube.com/watch?v=qj7jcuU2Z10 Navigation component 구성
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Laura"),
-          centerTitle: true,
-        ),
-        body: _tabs[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home",
+      body: _tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Theme.of(context).primaryColor,
+          currentIndex: _currentIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: "Customers",
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_circle,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.camera),
-                label: "Gallery",
+              label: "Customers",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.camera,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: "Settings",
+              label: "Gallery",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
               ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }
-        ),
+              label: "Settings",
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          }),
     );
   }
 }
