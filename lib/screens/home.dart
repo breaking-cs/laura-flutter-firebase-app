@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "../components/custom_app_bar.dart";
 
@@ -15,7 +16,10 @@ class CustomCard extends StatelessWidget {
         left: 10,
         right: 10,
       ),
-      child: Text("Hello"),
+      child: Container(
+        child: Text("Hello"),
+        padding: const EdgeInsets.all(10),
+      ),
       elevation: 5,
     );
   }
@@ -58,39 +62,50 @@ class HomeCard extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String? currentUserName = FirebaseAuth.instance.currentUser!.displayName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Home"),
-      body: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-            ),
-            padding: const EdgeInsets.all(20.0),
-            child: const Text("Hello!"),
-          ),
-          Expanded(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+      backgroundColor: Colors.indigo,
+      body: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$currentUserName 사장님,',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                    ),
+                    const Text(
+                      '오늘도\n힘내세요!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                    ),
+                    const HomeCard(),
+                  ],
+                ),
               ),
-              margin: const EdgeInsets.only(
-                bottom: 30,
-                left: 10,
-                right: 10,
-              ),
-              child: const HomeCard(),
-              elevation: 5,
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 }
