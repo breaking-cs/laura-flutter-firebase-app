@@ -5,10 +5,12 @@ import "./gallery.dart";
 import "./settings.dart";
 
 class App extends StatefulWidget {
-  final Function requestLogOut;
+  const App({Key? key}) : super(key: key);
 
-  // ignore: use_key_in_widget_constructors
-  const App(this.requestLogOut);
+  /*
+  final bool isLoggedIn;
+  const App(this.isLoggedIn);
+   */
 
   @override
   State<App> createState() => _AppState();
@@ -22,6 +24,7 @@ class _AppState extends State<App> {
     Center(child: Customers()),
     Center(child: Gallery()),
     Center(child: Settings()),
+    // Center(child: Settings(isLoggedIn)),
   ];
 
   @override
@@ -30,15 +33,6 @@ class _AppState extends State<App> {
         appBar: AppBar(
           title: const Text("Laura"),
           centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.logout),
-              tooltip: 'Open shopping cart',
-              onPressed: () {
-                widget.requestLogOut();
-              },
-            ),
-          ],
         ),
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
@@ -66,6 +60,8 @@ class _AppState extends State<App> {
               setState(() {
                 _currentIndex = index;
               });
-            }));
+            }
+        ),
+    );
   }
 }

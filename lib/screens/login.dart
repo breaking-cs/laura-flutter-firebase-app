@@ -1,96 +1,133 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './email_signup.dart';
+import './email_signin.dart';
+import './app.dart';
+import '../utils/auth_service.dart';
 
-class Login extends StatefulWidget {
-  final Function requestLogIn;
-  final String loginStatus;
+class Login extends StatefulWidget{
+  const Login({Key? key}) : super(key: key);
 
-  // ignore: use_key_in_widget_constructors
-  const Login(this.requestLogIn, this.loginStatus);
+  /*
+  final bool isLoggedIn;
+  const Login(this.isLoggedIn);
+   */
 
   @override
-  State<Login> createState() => _LoginState();
+  _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  final _userId = TextEditingController();
-  final _userPassword = TextEditingController();
-  Future? _loginFuture;
+class _LoginState extends State<Login>{
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  //late bool isLoggedIn;
+  String loginStatus = ""; // inProgress, failed, success
+  String? userId;
+  User? user;
 
-  loginUser() async {
-    await widget.requestLogIn(_userId.text);
 
-    _userId.clear();
-    _userPassword.clear();
+  Future<void> autoLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userIdStorage = prefs.getString('user_id');
+    User? currentUser= FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      setState(() {
+        //isLoggedIn = true;
+        user = currentUser;
+        userId = userIdStorage;
+      });
+      return;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    autoLogIn();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: InProgress, Failed일때 처리 해줘야함
-    print(widget.loginStatus);
     return Scaffold(
-      body: SafeArea(
-        child: SizedBox.expand(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 16.0),
-              Text(
-                'Login Screen',
+      backgroundColor: Colors.indigo,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('LAURA',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('FOR YOUR ONE AND ONLY,\nFLOWER SHOP',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20),
               ),
-              const SizedBox(height: 36.0),
-              FutureBuilder(
-                future: _loginFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _userId,
-                            decoration: const InputDecoration(
-                              labelText: 'Id',
-                            ),
-                            // validator: _validateEmail,
-                          ),
-                          TextFormField(
-                            controller: _userPassword,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                            ),
-                            // validator: _validatePassword,
-                          ),
-                          const SizedBox(height: 16.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: loginUser,
-                                child: const Text('LOGIN'),
-                              ),
-                              ElevatedButton(
-                                onPressed: null,
-                                child: const Text('SIGN UP'),
-                              )
-                            ],
-                          ),
-                        ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: <Widget>[
+                  SignInButtonBuilder(
+                      text: 'Sign in with Email',
+                      icon: Icons.email,
+                      backgroundColor: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                  );
-                },
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const EmailSignIn()),
+                          //MaterialPageRoute(builder: (context) => EmailSignIn(isLoggedIn)),
+                        );
+                      }
+                  ),
+                  SignInButton(
+                      Buttons.Google,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () async {
+                        await Authentication.signInWithGoogle().then((result) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const App()),
+                            //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
+                          );
+                        });
+                      },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            GestureDetector(
+              child: const Text("Don't have an account? SIGN UP!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    decoration: TextDecoration.underline),
+              ),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const EmailSignUp()),
+                  //MaterialPageRoute(builder: (context) => EmailSignUp(isLoggedIn)),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

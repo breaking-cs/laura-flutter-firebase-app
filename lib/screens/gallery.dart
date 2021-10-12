@@ -5,6 +5,16 @@ class Gallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Gallery");
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("Gallery",
+          style: TextStyle(color: Colors.black),
+        ),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        extendBodyBehindAppBar: true,
+    );
   }
 }
