@@ -1,12 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import "./home.dart";
 import "./customers.dart";
 import "./gallery.dart";
 import "./settings.dart";
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
+  /*
+  final bool isLoggedIn;
+  const App(this.isLoggedIn);
+   */
+
   @override
   State<App> createState() => _AppState();
 }
@@ -19,11 +24,16 @@ class _AppState extends State<App> {
     Center(child: Customers()),
     Center(child: Gallery()),
     Center(child: Settings()),
+    // Center(child: Settings(isLoggedIn)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text("Laura"),
+          centerTitle: true,
+        ),
         body: _tabs[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

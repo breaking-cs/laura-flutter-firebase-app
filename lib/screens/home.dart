@@ -19,29 +19,32 @@ class _HomeState extends State<Home> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot){
               return Padding(
-                  padding: EdgeInsets.all(50.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Hello!",
+                      const Text('Hello!',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 40),
                       ),
-                      Text("${currentUserName} 사장님,",
-                        style: TextStyle(
-                          color: Colors.white,
+                      Text('$currentUserName 사장님,',
+                        style: const TextStyle(color: Colors.white,
                             fontSize: 30),
                       ),
-                      Text("오늘도\n힘내세요!",
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                      const Text('오늘도\n힘내세요!',
                         style: TextStyle(
                           color: Colors.white,
-                            fontSize: 20),
+                            fontSize: 25),
                       ),
-                   ],
-                ),
+                    ],
+                  ),
               );
             }
-          )
+        )
     );
   }
 }
