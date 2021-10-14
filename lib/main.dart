@@ -13,11 +13,13 @@ void main() async {
 }
 
 class Main extends StatelessWidget {
-  User? currentUser = FirebaseAuth.instance.currentUser;
+  final User? currentUser = FirebaseAuth.instance.currentUser;
+
+  Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = currentUser == null;
+    bool isLoggedIn = !(currentUser == null);
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -36,7 +38,7 @@ class Main extends StatelessWidget {
                 color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
           ),
         ),
-        home: isLoggedIn ? const Login() : const App(),
+        home: isLoggedIn ? const App() : const Login(),
         routes: {
           CustomersTransaction.routeName: (context) =>
               const CustomersTransaction(),
