@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
+import './providers/transactions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,22 +28,27 @@ class Main extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-        title: 'Laura',
-        theme: ThemeData(
-          fontFamily: 'OpenSans',
-          primaryColor: Colors.indigo,
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
-            bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
-            subtitle1: TextStyle(
-                color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold),
+    return ChangeNotifierProvider(
+      create: (ctx) => Transactions(),
+      child: MaterialApp(
+          title: 'Laura',
+          theme: ThemeData(
+            fontFamily: 'OpenSans',
+            primaryColor: Colors.indigo,
+            textTheme: const TextTheme(
+              bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
+              bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
+              subtitle1: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        home: isLoggedIn ? const App() : const Login(),
-        routes: {
-          CustomersTransaction.routeName: (context) =>
-              const CustomersTransaction(),
-        });
+          home: isLoggedIn ? const App() : const Login(),
+          routes: {
+            CustomersTransaction.routeName: (context) =>
+                const CustomersTransaction(),
+          }),
+    );
   }
 }

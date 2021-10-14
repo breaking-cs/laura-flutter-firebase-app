@@ -1,22 +1,11 @@
-import 'package:app/models/transaction.dart';
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
+import 'package:provider/provider.dart';
 import '../components/gallery_item.dart';
 import "../components/custom_app_bar.dart";
+import '../providers/transactions.dart';
 
 class Gallery extends StatelessWidget {
   Gallery({Key? key}) : super(key: key);
-
-  final List<Transaction> transactions = List<Transaction>.generate(
-    100,
-    (index) => Transaction(
-      id: index,
-      customerId: index + 1,
-      amount: 1000,
-      date: DateTime.now(),
-      imgUrl: 'https://picsum.photos/400',
-    ),
-  );
 
   String formatDate(DateTime tx) {
     return "${tx.year.toString()}년 ${tx.month.toString()}월 ${tx.day.toString()}일";
@@ -24,6 +13,8 @@ class Gallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transactions = context.watch<Transactions>().items;
+
     return Scaffold(
       appBar: const CustomAppBar(title: "Gallery"),
       body: GridView.builder(
@@ -36,7 +27,8 @@ class Gallery extends StatelessWidget {
         itemCount: transactions.length,
         itemBuilder: (ctx, index) {
           return GalleryItem(
-            title: formatDate(transactions[index].date),
+            title:
+                "id: ${transactions[index].id} , ${formatDate(transactions[index].date)}",
             imgUrl: transactions[index].imgUrl,
           );
         },

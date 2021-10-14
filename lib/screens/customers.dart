@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/transactions.dart';
+import '../models/transaction.dart';
 import "../components/custom_app_bar.dart";
 import "../screens/customers_tx.dart";
 
@@ -13,13 +16,25 @@ class Customers extends StatelessWidget {
         children: [
           Text("Welcome"),
           ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  CustomersTransaction.routeName,
-                  arguments: {'id': 1},
-                );
-              },
-              child: Text("구매 내역 임시로 연결한것"))
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                CustomersTransaction.routeName,
+                arguments: {'id': 1},
+              );
+            },
+            child: Text("구매 내역 임시로 연결한것"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<Transactions>().addTransaction(
+                    customerId: 123,
+                    amount: 1000,
+                    date: DateTime.now(),
+                    imgUrl: 'https://picsum.photos/400',
+                  );
+            },
+            child: Text("Provider Test"),
+          )
         ],
       ),
     );
