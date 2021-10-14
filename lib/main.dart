@@ -28,8 +28,13 @@ class Main extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return ChangeNotifierProvider(
-      create: (ctx) => Transactions(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Transactions(),
+        ),
+        // 여기에 Provider 쭉쭉 추가하면 됩니다.
+      ],
       child: MaterialApp(
           title: 'Laura',
           theme: ThemeData(
