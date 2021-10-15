@@ -17,7 +17,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
   final _tabs = [
     Center(child: Home()),
