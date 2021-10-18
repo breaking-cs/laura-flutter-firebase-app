@@ -1,23 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../providers/transactions.dart';
 import '../models/transaction.dart';
 import "../components/custom_app_bar.dart";
+import "../components/customer_list.dart";
 import "../screens/customers_tx.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Customers extends StatelessWidget {
+class Customers extends StatefulWidget {
   const Customers({Key? key}) : super(key: key);
 
   @override
+  State<Customers> createState() => _CustomersState();
+}
+
+class _CustomersState extends State<Customers> {
+  String? uid = FirebaseAuth.instance.currentUser!.uid;
+
+  @override
   Widget build(BuildContext context) {
-    CollectionReference firestore =
-        FirebaseFirestore.instance.collection('users');
+    CollectionReference? customers =
+        FirebaseFirestore.instance.collection('users/$uid/customers');
+
+    Future<void> _addCustomers() {
+      return customers
+          .add({'name': 'Test야'})
+          .then((val) => print('customer Added'))
+          .catchError((error) => print("Failed to Add Customers: $error"));
+    }
+
     return Scaffold(
       appBar: const CustomAppBar(title: "Customers"),
       body: Column(
         children: [
-          Text("Welcome"),
+          Expanded(
+            child: CustomerList(),
+          ),
+          ElevatedButton(
+            onPressed: _addCustomers,
+            child: Text("손님 추가 test요"),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushNamed(
