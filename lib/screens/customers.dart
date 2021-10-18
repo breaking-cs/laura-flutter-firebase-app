@@ -25,7 +25,10 @@ class _CustomersState extends State<Customers> {
 
     Future<void> _addCustomers() {
       return customers
-          .add({'name': 'Test야'})
+          .add({
+            'name': 'Test야',
+            'createdAt': Timestamp.now(),
+          })
           .then((val) => print('customer Added'))
           .catchError((error) => print("Failed to Add Customers: $error"));
     }

@@ -17,6 +17,7 @@ class _CustomerListState extends State<CustomerList> {
     final Stream<QuerySnapshot>? _customerStream = (uid != null)
         ? FirebaseFirestore.instance
             .collection('users/$uid/customers')
+            .orderBy('createdAt')
             .snapshots()
         : null;
 
@@ -32,6 +33,7 @@ class _CustomerListState extends State<CustomerList> {
         }
 
         return ListView.builder(
+            reverse: true,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               Map<String, dynamic> data =
