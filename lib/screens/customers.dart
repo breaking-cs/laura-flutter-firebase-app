@@ -4,12 +4,15 @@ import '../providers/transactions.dart';
 import '../models/transaction.dart';
 import "../components/custom_app_bar.dart";
 import "../screens/customers_tx.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Customers extends StatelessWidget {
   const Customers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference firestore =
+        FirebaseFirestore.instance.collection('users');
     return Scaffold(
       appBar: const CustomAppBar(title: "Customers"),
       body: Column(
