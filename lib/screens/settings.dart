@@ -1,3 +1,4 @@
+import 'package:app/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,11 +8,6 @@ import './login.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
-
-  /*
-  final bool isLoggedIn;
-  const Settings(this.isLoggedIn);
-   */
 
   @override
   _SettingsState createState() => _SettingsState();
@@ -33,17 +29,13 @@ class _SettingsState extends State<Settings> {
             // MaterialPageRoute(builder: (context) => Login(isLoggedIn)),
                 (Route<dynamic> route) => false);
       });
-      /*
-      setState(() {
-        isLoggedIn = false;
-      });
-       */
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(title: 'Settings'),
       body: ListView(
         children: <Widget>[
           ListTile(

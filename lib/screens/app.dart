@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import "./home.dart";
-import "./customers.dart";
-import "./gallery.dart";
-import "./settings.dart";
+import 'package:app/screens/home.dart';
+import 'package:app/screens/customers.dart';
+import 'package:app/screens/gallery.dart';
+import 'package:app/screens/settings.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
-
-  /*
-  final bool isLoggedIn;
-  const App(this.isLoggedIn);
-   */
 
   @override
   State<App> createState() => _AppState();
