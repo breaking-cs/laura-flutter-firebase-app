@@ -45,7 +45,7 @@ class Main extends StatelessWidget {
               bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
               subtitle1: TextStyle(
                   color: Colors.blue,
-                  fontSize: 50,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
           ),
