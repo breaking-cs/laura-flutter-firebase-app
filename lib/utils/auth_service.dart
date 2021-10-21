@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class Authentication {
-  /*
+class Authentication with ChangeNotifier {
+
   final FirebaseAuth _auth;
 
   Authentication(this._auth);
   Stream<User?> get authStateChanges => _auth.authStateChanges();
-   */
+
 
   static Future<String?> signUpWithEmail(String name, String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -20,7 +21,7 @@ class Authentication {
       );
 
       user = credential.user;
-      await user!.updateProfile(displayName: name);
+      await user!.updateDisplayName(name);
       await user.reload();
       user = _auth.currentUser;
 
@@ -98,5 +99,14 @@ class Authentication {
     } on FirebaseAuthException catch(e) {
       print(e);
     }
+  }
+
+  static Future<User?> refreshUser(User user) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    await user.reload();
+    User? refreshedUser = _auth.currentUser;
+
+    return refreshedUser;
   }
 }

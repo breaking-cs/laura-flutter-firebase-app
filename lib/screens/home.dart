@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import "../components/custom_app_bar.dart";
+import "package:app/components/custom_app_bar.dart";
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.only(
         bottom: 30,
@@ -31,15 +31,14 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(30.0),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const Text("Today: Date"),
           GridView.count(
             padding: const EdgeInsets.only(
-              top: 20,
+              top: 70,
             ),
             primary: true,
             shrinkWrap: true,
@@ -75,34 +74,98 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Home"),
       backgroundColor: Colors.indigo,
       body: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$currentUserName 사장님,',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(35),
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                        padding: EdgeInsets.all(15),
                       ),
+                        const Text(
+                          'Hello!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                          ),
+                        ),
+                        Text(
+                          '$currentUserName 사장님,',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(20),
+                        ),
+                        const Text(
+                          '오늘도\n힘내세요!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                          ),
+                        ),
+                      ],
                     ),
-                    const Text(
-                      '오늘도\n힘내세요!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
+                  ),
+                  Stack(
+                    fit: StackFit.passthrough,
+                    overflow: Overflow.visible,
+                    children: [
+                      Container(),
+                      Positioned(
+                        right: 20,
+                        top: -170,
+                        child: Container(
+                          width: 170,
+                          height: 170,
+                          child: const Image(image: AssetImage('assets/flower_w.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                    const HomeCard(),
-                  ],
-                ),
+                      Positioned(
+                        top: -10,
+                        left: 20,
+                        right: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadiusDirectional.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black54,
+                                blurRadius: 15.0,
+                                spreadRadius: 1.0,
+                                offset: Offset(5, 5),
+                              ),
+                            ],
+                          ),
+                          width: 300,
+                          height: 550,
+                          child: const Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              'Today,\n10/10 금요일',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const HomeCard(),
+                ],
               ),
             );
           }),

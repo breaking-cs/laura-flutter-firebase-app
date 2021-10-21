@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './email_signup.dart';
-import './email_signin.dart';
-import './app.dart';
-import '../utils/auth_service.dart';
+import 'package:app/screens/email_signup.dart';
+import 'package:app/screens/email_signin.dart';
+import 'package:app/screens/app.dart';
+import 'package:app/utils/auth_service.dart';
 
 class Login extends StatefulWidget{
   const Login({Key? key}) : super(key: key);
-
-  /*
-  final bool isLoggedIn;
-  const Login(this.isLoggedIn);
-   */
 
   @override
   _LoginState createState() => _LoginState();
@@ -21,7 +16,7 @@ class Login extends StatefulWidget{
 
 class _LoginState extends State<Login>{
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  //late bool isLoggedIn;
+
   String loginStatus = ""; // inProgress, failed, success
   String? userId;
   User? user;
@@ -34,7 +29,6 @@ class _LoginState extends State<Login>{
 
     if (currentUser != null) {
       setState(() {
-        //isLoggedIn = true;
         user = currentUser;
         userId = userIdStorage;
       });
@@ -58,10 +52,10 @@ class _LoginState extends State<Login>{
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text('LAURA',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40),
+              child: Image(image: AssetImage('assets/laura_logo_w.png'),
+                width: 150,
+                height: 150,
+                fit: BoxFit.fill,
               ),
             ),
             const Padding(
@@ -74,7 +68,7 @@ class _LoginState extends State<Login>{
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: <Widget>[
                   SignInButtonBuilder(
@@ -88,7 +82,6 @@ class _LoginState extends State<Login>{
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const EmailSignIn()),
-                          //MaterialPageRoute(builder: (context) => EmailSignIn(isLoggedIn)),
                         );
                       }
                   ),
@@ -103,7 +96,6 @@ class _LoginState extends State<Login>{
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const App()),
-                            //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
                           );
                         });
                       },
@@ -123,7 +115,6 @@ class _LoginState extends State<Login>{
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const EmailSignUp()),
-                  //MaterialPageRoute(builder: (context) => EmailSignUp(isLoggedIn)),
                 );
               },
             ),
