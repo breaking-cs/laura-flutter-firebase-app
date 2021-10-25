@@ -20,6 +20,7 @@ class CustomerCard extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(
             CustomersTransaction.routeName,
+            arguments: data,
           );
         },
       ),

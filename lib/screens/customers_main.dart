@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "../widgets/custom_app_bar.dart";
 import "../widgets/customer_list.dart";
 
-class Customers extends StatefulWidget {
-  const Customers({Key? key}) : super(key: key);
+class CustomerMain extends StatefulWidget {
+  const CustomerMain({Key? key}) : super(key: key);
 
   @override
-  State<Customers> createState() => _CustomersState();
+  State<CustomerMain> createState() => _CustomerMainState();
 }
 
-class _CustomersState extends State<Customers> {
+class _CustomerMainState extends State<CustomerMain> {
   String? uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
