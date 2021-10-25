@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import "./customer_card.dart";
+import '../models/customer.dart';
 
 class CustomerList extends StatefulWidget {
   const CustomerList({Key? key}) : super(key: key);
@@ -37,9 +39,11 @@ class _CustomerListState extends State<CustomerList> {
             itemBuilder: (context, index) {
               Map<String, dynamic> data =
                   snapshot.data!.docs[index].data()! as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['name']),
-              );
+
+              var customer = Customer(
+                  createdAt: data["createdAt"].toDate(), name: data["name"]);
+
+              return CustomerCard(data: customer);
             });
       },
     );

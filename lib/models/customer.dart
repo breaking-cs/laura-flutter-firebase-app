@@ -1,10 +1,10 @@
 class Customer {
-  final String id; // customer id
+  final DateTime createdAt;
   final String name;
   bool isVip;
 
   Customer({
-    required this.id,
+    required this.createdAt,
     required this.name,
     this.isVip = false,
   });

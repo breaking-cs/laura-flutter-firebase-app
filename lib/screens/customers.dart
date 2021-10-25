@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../providers/transactions.dart';
 import '../models/transaction.dart';
-import "../components/custom_app_bar.dart";
-import "../components/customer_list.dart";
+import "../widgets/custom_app_bar.dart";
+import "../widgets/customer_list.dart";
 import "../screens/customers_tx.dart";
 
 class Customers extends StatefulWidget {
@@ -37,12 +37,12 @@ class _CustomersState extends State<Customers> {
       appBar: const CustomAppBar(title: "Customers"),
       body: Column(
         children: [
-          Expanded(
+          const Expanded(
             child: CustomerList(),
           ),
           ElevatedButton(
             onPressed: _addCustomers,
-            child: Text("손님 추가 test요"),
+            child: const Text("손님 추가 test요"),
           ),
           ElevatedButton(
             onPressed: () {
@@ -51,7 +51,7 @@ class _CustomersState extends State<Customers> {
                 arguments: {'id': 1},
               );
             },
-            child: Text("구매 내역 임시로 연결한것"),
+            child: const Text("구매 내역 임시로 연결한것"),
           ),
           ElevatedButton(
             onPressed: () {
@@ -62,7 +62,7 @@ class _CustomersState extends State<Customers> {
                     imgUrl: 'https://picsum.photos/400',
                   );
             },
-            child: Text("Provider Test"),
+            child: const Text("Provider Test"),
           )
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "../components/custom_app_bar.dart";
+import "../widgets/custom_app_bar.dart";
 
 class CustomersTransaction extends StatelessWidget {
   static const routeName = '/customers_tx';

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import "package:app/components/custom_app_bar.dart";
+import "package:app/widgets/custom_app_bar.dart";
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -88,8 +88,8 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                        padding: EdgeInsets.all(15),
-                      ),
+                          padding: EdgeInsets.all(15),
+                        ),
                         const Text(
                           'Hello!',
                           style: TextStyle(
@@ -128,7 +128,8 @@ class _HomeState extends State<Home> {
                         child: Container(
                           width: 170,
                           height: 170,
-                          child: const Image(image: AssetImage('assets/flower_w.png'),
+                          child: const Image(
+                            image: AssetImage('assets/flower_w.png'),
                           ),
                         ),
                       ),
