@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/customer.dart';
+import "../screens/customers_tx.dart";
 
 class CustomerCard extends StatelessWidget {
   final Customer data;
@@ -8,12 +9,20 @@ class CustomerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(
-        Icons.person,
+      leading: const IconButton(
+        icon: Icon(Icons.person),
+        onPressed: null,
       ),
       title: Text(data.name),
       subtitle: Text(data.createdAt.toString()),
-      trailing: const Icon(Icons.arrow_forward),
+      trailing: IconButton(
+        icon: const Icon(Icons.arrow_forward),
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            CustomersTransaction.routeName,
+          );
+        },
+      ),
     );
   }
 }
