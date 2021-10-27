@@ -13,7 +13,7 @@ class CustomerStream {
           .orderBy('createdAt', descending: false)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => Customer.fromJson(doc.data()))
+              .map((doc) => Customer.fromJson(doc.data(), doc.id))
               .toList());
     } else {
       return const Stream.empty();
@@ -37,6 +37,24 @@ Future<void> addCustomers({
         })
         .then((val) => print('customer Added'))
         .catchError((error) => print("Failed to Add Customers: $error"));
+  } else {
+    return Future.value();
+  }
+}
+
+Future<void> deleteCustomer(String hashcode) {
+  final String? uid = FirebaseAuth.instance.currentUser!.uid;
+
+  if (uid != null) {
+    CollectionReference? customers =
+        FirebaseFirestore.instance.collection('users/$uid/customers');
+
+    print(hashcode);
+    return customers
+        .doc(hashcode.toString())
+        .delete()
+        .then((value) => print("User Deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
   } else {
     return Future.value();
   }
