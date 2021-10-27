@@ -10,16 +10,16 @@ class CustomersTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs = ModalRoute.of(context)?.settings.arguments as Customer;
-    final name = routeArgs.name;
-    final createdAt = routeArgs.createdAt;
+    final List<Customer> customerList = Provider.of<List<Customer>>(context);
+    final int index = ModalRoute.of(context)?.settings.arguments as int;
+    final Customer customer = customerList[index];
 
     return Scaffold(
       appBar: CustomAppBar(title: "구매 내역"),
       body: Column(
         children: [
-          Text("고객: ${name}"),
-          Text("CreatedAt: ${createdAt}"),
+          Text("고객: ${customer.name}"),
+          Text("CreatedAt: ${customer.createdAt}"),
           ElevatedButton(
             onPressed: () {
               context.read<Transactions>().addTransaction(

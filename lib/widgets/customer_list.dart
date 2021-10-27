@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import "./customer_card.dart";
 import '../models/customer.dart';
 
@@ -12,40 +11,14 @@ class CustomerList extends StatefulWidget {
 }
 
 class _CustomerListState extends State<CustomerList> {
-  String? uid = FirebaseAuth.instance.currentUser!.uid;
-
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot>? _customerStream = (uid != null)
-        ? FirebaseFirestore.instance
-            .collection('users/$uid/customers')
-            .orderBy('createdAt', descending: false)
-            .snapshots()
-        : null;
+    final customers = Provider.of<List<Customer>>(context);
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: _customerStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
-
-        return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              Map<String, dynamic> data =
-                  snapshot.data!.docs[index].data()! as Map<String, dynamic>;
-
-              var customer = Customer(
-                  createdAt: data["createdAt"].toDate(), name: data["name"]);
-
-              return CustomerCard(data: customer);
-            });
-      },
-    );
+    return ListView.builder(
+        itemCount: customers.length,
+        itemBuilder: (context, index) {
+          return CustomerCard(index: index, data: customers[index]);
+        });
   }
 }

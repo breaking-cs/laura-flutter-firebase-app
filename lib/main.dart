@@ -7,6 +7,8 @@ import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
 import './providers/transactions.dart';
+import './utils/firebase_services.dart';
+import './models/customer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +18,7 @@ void main() async {
 
 class Main extends StatelessWidget {
   final User? currentUser = FirebaseAuth.instance.currentUser;
+  final FirebaseServices firebaseServices = FirebaseServices();
 
   Main({Key? key}) : super(key: key);
 
@@ -33,6 +36,10 @@ class Main extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Transactions(),
         ),
+        StreamProvider<List<Customer>>.value(
+          value: firebaseServices.getCustomerList(currentUser!.uid),
+          initialData: [],
+        )
         // 여기에 Provider 쭉쭉 추가하면 됩니다.
       ],
       child: MaterialApp(

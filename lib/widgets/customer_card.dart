@@ -4,7 +4,9 @@ import "../screens/customers_tx.dart";
 
 class CustomerCard extends StatelessWidget {
   final Customer data;
-  const CustomerCard({Key? key, required this.data}) : super(key: key);
+  final int index;
+  const CustomerCard({Key? key, required this.index, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomerCard extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(
             CustomersTransaction.routeName,
-            arguments: data,
+            arguments: index,
           );
         },
       ),

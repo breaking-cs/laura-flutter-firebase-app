@@ -8,4 +8,9 @@ class Customer {
     required this.name,
     this.isVip = false,
   });
+
+  Customer.fromJson(Map<String, dynamic> parsedJSON)
+      : name = parsedJSON['name'],
+        createdAt = parsedJSON['createdAt'].toDate(),
+        isVip = false;
 }
