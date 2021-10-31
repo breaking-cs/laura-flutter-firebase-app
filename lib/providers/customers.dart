@@ -4,10 +4,11 @@ import '../models/customer.dart';
 
 class CustomerStream {
   final FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
-  final String? uid = FirebaseAuth.instance.currentUser!.uid;
+  final User? currentUser = FirebaseAuth.instance.currentUser;
 
   Stream<List<Customer>> getCustomerList() {
-    if (uid != null) {
+    if (currentUser != null) {
+      var uid = currentUser!.uid;
       return _fireStoreDatabase
           .collection('users/$uid/customers')
           .orderBy('createdAt', descending: false)
