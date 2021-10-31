@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../providers/customers.dart';
+import './customers_add.dart';
 import "../widgets/custom_app_bar.dart";
 import "../widgets/customer_list.dart";
 
@@ -22,9 +22,11 @@ class _CustomerMainState extends State<CustomerMain> {
           ),
           ElevatedButton(
             onPressed: () => {
-              addCustomers(name: "hello"),
+              Navigator.of(context).pushNamed(
+                CustomersAdd.routeName,
+              )
             },
-            child: const Text("손님 추가 test요"),
+            child: const Text("Add Customers"),
           ),
         ],
       ),

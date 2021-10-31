@@ -3,31 +3,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/customer.dart';
 
 class CustomerStream {
-  final FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
-  final User? currentUser = FirebaseAuth.instance.currentUser;
+  late final FirebaseFirestore _fireStoreDatabase;
+  late final User? currentUser;
+  late final CollectionReference? customers;
 
-  Stream<List<Customer>> getCustomerList() {
+  CustomerStream() {
+    _fireStoreDatabase = FirebaseFirestore.instance;
+    currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       var uid = currentUser!.uid;
-      return _fireStoreDatabase
-          .collection('users/$uid/customers')
-          .orderBy('createdAt', descending: false)
+      customers = _fireStoreDatabase.collection('users/$uid/customers');
+    }
+  }
+
+  Stream<List<Customer>> getCustomerList() {
+    if ((currentUser == null) || (customers == null)) {
+      return const Stream.empty();
+    } else {
+      return customers!
+          .orderBy(
+            'createdAt',
+            descending: false,
+          )
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => Customer.fromJson(doc.data(), doc.id))
+              .map((doc) =>
+                  Customer.fromJson(doc.data() as Map<String, dynamic>, doc.id))
               .toList());
-    } else {
-      return const Stream.empty();
     }
   }
 }
 
 Future<void> addCustomers({
   required String name,
-}) {
-  final String? uid = FirebaseAuth.instance.currentUser!.uid;
+}) async {
+  final User? user = FirebaseAuth.instance.currentUser;
 
-  if (uid != null) {
+  if (user != null) {
+    String uid = user.uid;
     CollectionReference? customers =
         FirebaseFirestore.instance.collection('users/$uid/customers');
 
@@ -44,13 +57,13 @@ Future<void> addCustomers({
 }
 
 Future<void> deleteCustomer(String hashcode) {
-  final String? uid = FirebaseAuth.instance.currentUser!.uid;
+  final User? user = FirebaseAuth.instance.currentUser;
 
-  if (uid != null) {
+  if (user != null) {
+    String uid = user.uid;
     CollectionReference? customers =
         FirebaseFirestore.instance.collection('users/$uid/customers');
 
-    print(hashcode);
     return customers
         .doc(hashcode.toString())
         .delete()

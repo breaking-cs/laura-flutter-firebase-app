@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
+import './screens/customers_add.dart';
 import './providers/transactions.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
@@ -59,6 +60,7 @@ class Main extends StatelessWidget {
           routes: {
             CustomersTransaction.routeName: (context) =>
                 const CustomersTransaction(),
+            CustomersAdd.routeName: (context) => const CustomersAdd(),
           }),
     );
   }
