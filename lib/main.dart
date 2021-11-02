@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
+import './screens/customers_add.dart';
 import './providers/transactions.dart';
+import 'providers/customers.dart';
+import './models/customer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +36,10 @@ class Main extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Transactions(),
         ),
+        StreamProvider<List<Customer>>.value(
+          value: CustomerStream().getCustomerList(),
+          initialData: const [],
+        )
         // 여기에 Provider 쭉쭉 추가하면 됩니다.
       ],
       child: MaterialApp(
@@ -53,6 +60,7 @@ class Main extends StatelessWidget {
           routes: {
             CustomersTransaction.routeName: (context) =>
                 const CustomersTransaction(),
+            CustomersAdd.routeName: (context) => const CustomersAdd(),
           }),
     );
   }

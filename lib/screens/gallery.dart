@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../components/gallery_item.dart';
-import "../components/custom_app_bar.dart";
+import '../widgets/gallery_item.dart';
+import "../widgets/custom_app_bar.dart";
 import '../providers/transactions.dart';
 
 class Gallery extends StatelessWidget {

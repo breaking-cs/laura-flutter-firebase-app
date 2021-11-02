@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/home.dart';
-import 'package:app/screens/customers.dart';
+import 'package:app/screens/customers_main.dart';
 import 'package:app/screens/gallery.dart';
 import 'package:app/screens/settings.dart';
 
@@ -16,7 +16,7 @@ class _AppState extends State<App> {
 
   final _tabs = [
     Center(child: Home()),
-    Center(child: Customers()),
+    Center(child: CustomerMain()),
     Center(child: Gallery()),
     Center(child: Settings()),
     // Center(child: Settings(isLoggedIn)),
