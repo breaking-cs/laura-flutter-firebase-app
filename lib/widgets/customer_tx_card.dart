@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import "../screens/customers_tx.dart";
-import '../providers/customers.dart';
+import '../providers/transactions.dart';
 
 class TxCard extends StatelessWidget {
   final Transaction data;
   final int index;
-  const TxCard({Key? key, required this.index, required this.data})
+  final String customerId;
+  const TxCard(
+      {Key? key,
+      required this.index,
+      required this.customerId,
+      required this.data})
       : super(key: key);
 
   @override
@@ -21,7 +26,7 @@ class TxCard extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
-          // deleteTransaction(data.id);
+          deleteTransaction(customerId, data.id);
         },
       ),
       onTap: () => {

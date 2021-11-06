@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import "../widgets/custom_app_bar.dart";
+import '../providers/transactions.dart';
 
 class CustomersTxAdd extends StatefulWidget {
   static const routeName = "/customers_tx_add";
 
-  CustomersTxAdd({Key? key}) : super(key: key);
+  const CustomersTxAdd({Key? key}) : super(key: key);
 
   @override
   _CustomersTxAddState createState() => _CustomersTxAddState();
@@ -12,10 +14,17 @@ class CustomersTxAdd extends StatefulWidget {
 
 class _CustomersTxAddState extends State<CustomersTxAdd> {
   final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> formData = {'title': null, 'img': null};
+  final Map<String, dynamic> formData = {
+    'amount': null,
+    "memo": "",
+    "imgUrl": ""
+  };
 
   @override
   Widget build(BuildContext context) {
+    final String customerId =
+        ModalRoute.of(context)?.settings.arguments as String;
+
     void handleUserInput() async {
       if (_formKey.currentState!.validate()) {
         ScaffoldMessenger.of(context)
@@ -23,9 +32,12 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
 
         _formKey.currentState!.save();
 
-        // await addCustomerTx(
-        //   title: formData["title"],
-        // );
+        await addTransactions(
+          customerId,
+          memo: formData["memo"],
+          amount: int.parse(formData["amount"]),
+          imgUrl: formData["imgUrl"],
+        );
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -44,16 +56,32 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Title';
+                        return 'Please Enter Memo';
                       }
                       return null;
                     },
                     decoration: const InputDecoration(
-                      icon: Icon(Icons.title),
-                      labelText: 'Title',
+                      icon: Icon(Icons.note),
+                      labelText: 'Memo',
                     ),
                     onSaved: (String? value) {
-                      formData['title'] = value;
+                      formData['memo'] = value;
+                    },
+                  ),
+                  TextFormField(
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please Add Amount';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.money),
+                      labelText: 'Money',
+                    ),
+                    onSaved: (String? value) {
+                      formData['amount'] = value;
                     },
                   ),
                   TextFormField(

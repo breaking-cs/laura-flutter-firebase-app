@@ -24,13 +24,15 @@ class CustomerTxList extends StatelessWidget {
           child: ListView.builder(
               itemCount: txs.length,
               itemBuilder: (context, index) {
-                return TxCard(index: index, data: txs[index]);
+                return TxCard(
+                    index: index, customerId: info.id, data: txs[index]);
               }),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pushNamed(
               CustomersTxAdd.routeName,
+              arguments: info.id,
             );
           },
           child: const Text("Add History"),

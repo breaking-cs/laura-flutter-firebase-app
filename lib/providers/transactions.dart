@@ -31,3 +31,36 @@ class TransactionStream {
     }
   }
 }
+
+Future<void> addTransactions(
+  String customerId, {
+  required int amount,
+  required String memo,
+  String imgUrl = "",
+}) async {
+  late final CollectionReference? txs;
+  FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
+  txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
+
+  return txs
+      .add({
+        'amount': amount,
+        "memo": memo,
+        "imgUrl": imgUrl,
+        'createdAt': Timestamp.now(),
+      })
+      .then((val) => print('customer Added'))
+      .catchError((error) => print("Failed to Add Customers: $error"));
+}
+
+Future<void> deleteTransaction(String customerId, String hashcode) {
+  late final CollectionReference? txs;
+  FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
+  txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
+
+  return txs
+      .doc(hashcode.toString())
+      .delete()
+      .then((value) => print("User Deleted"))
+      .catchError((error) => print("Failed to delete user: $error"));
+}
