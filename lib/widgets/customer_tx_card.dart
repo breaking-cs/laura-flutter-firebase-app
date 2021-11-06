@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import "../screens/customers_tx.dart";
+import '../screens/customer_tx_detail.dart';
 import '../providers/transactions.dart';
 
 class TxCard extends StatelessWidget {
@@ -30,7 +31,7 @@ class TxCard extends StatelessWidget {
         },
       ),
       onTap: () => {
-        // To Customer Transaciton 상세 화면
+        Navigator.of(context).pushNamed(TxDetail.routeName, arguments: data)
       },
     );
   }

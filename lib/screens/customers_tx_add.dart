@@ -96,7 +96,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                       labelText: 'Image',
                     ),
                     onSaved: (String? value) {
-                      formData['image'] = value;
+                      formData['imgUrl'] = value;
                     },
                   )
                 ],
