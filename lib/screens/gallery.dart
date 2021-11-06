@@ -10,26 +10,27 @@ class Gallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transactions = context.watch<Transactions>().items;
+    // final transactions = context.watch<Transactions>().items;
 
-    return Scaffold(
-      appBar: const CustomAppBar(title: "Gallery"),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 5,
-        ),
-        itemCount: transactions.length,
-        itemBuilder: (ctx, index) {
-          return GalleryItem(
-            title:
-                "id: ${transactions[index].id} , ${formatDate(transactions[index].date)}",
-            imgUrl: transactions[index].imgUrl,
-          );
-        },
-      ),
-    );
+    return Text("hello");
+    // Scaffold(
+    //   appBar: const CustomAppBar(title: "Gallery"),
+    //   body: GridView.builder(
+    //     padding: const EdgeInsets.all(10),
+    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 2,
+    //       crossAxisSpacing: 10,
+    //       mainAxisSpacing: 5,
+    //     ),
+    //     itemCount: transactions.length,
+    //     itemBuilder: (ctx, index) {
+    //       return GalleryItem(
+    //         title:
+    //             "id: ${transactions[index].id} , ${formatDate(transactions[index].date)}",
+    //         imgUrl: transactions[index].imgUrl,
+    //       );
+    //     },
+    //   ),
+    // );
   }
 }

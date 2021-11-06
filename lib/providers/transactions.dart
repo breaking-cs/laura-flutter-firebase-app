@@ -1,36 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
+import '../models/customer.dart';
+import '../models/transaction.dart' as tx;
 
-class Transactions with ChangeNotifier {
-  // deep final이 아니다
-  final List<Transaction> _items = List<Transaction>.generate(
-    1,
-    (index) => Transaction(
-      id: index,
-      customerId: index + 1,
-      amount: 1000,
-      date: DateTime.now(),
-      imgUrl: 'https://picsum.photos/400',
-    ),
-  );
+class TransactionStream {
+  late final FirebaseFirestore _fireStoreDatabase;
+  late String customerId;
+  late final CollectionReference? txs;
 
-  List<Transaction> get items {
-    return [..._items];
+  TransactionStream({required this.customerId}) {
+    _fireStoreDatabase = FirebaseFirestore.instance;
+    txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
   }
 
-  void addTransaction({
-    required customerId,
-    required amount,
-    required date,
-    required imgUrl,
-  }) {
-    _items.add(Transaction(
-      id: _items.length,
-      customerId: customerId,
-      amount: amount,
-      date: date,
-      imgUrl: imgUrl,
-    ));
-    notifyListeners();
+  Stream<List<tx.Transaction>> getTransationList() {
+    if (txs == null) {
+      return Stream.empty();
+    } else {
+      return txs!
+          .orderBy(
+            'createdAt',
+            descending: false,
+          )
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => tx.Transaction.fromJson(
+                  doc.data() as Map<String, dynamic>, doc.id))
+              .toList());
+    }
   }
 }

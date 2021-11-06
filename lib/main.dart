@@ -8,9 +8,9 @@ import "./screens/app.dart";
 import './screens/customers_tx.dart';
 import './screens/customers_add.dart';
 import './screens/customers_tx_add.dart';
-import './providers/transactions.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
+import './models/transaction.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,9 +34,6 @@ class Main extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Transactions(),
-        ),
         StreamProvider<List<Customer>?>.value(
           value: CustomerStream().getCustomerList(),
           initialData: null,

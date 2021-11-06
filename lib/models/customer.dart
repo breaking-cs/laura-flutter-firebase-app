@@ -1,7 +1,7 @@
 class Customer {
   final DateTime createdAt;
+  final String id; // document id
   final String name;
-  final String id;
   bool isVip;
 
   Customer({
