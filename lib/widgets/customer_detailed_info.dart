@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import "../models/customer.dart";
 import "../utils/date.dart";
 
-class CustomerInfo extends StatelessWidget {
+class CustomerDetailedInfo extends StatelessWidget {
   final Customer info;
-  const CustomerInfo({Key? key, required this.info}) : super(key: key);
+  const CustomerDetailedInfo({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

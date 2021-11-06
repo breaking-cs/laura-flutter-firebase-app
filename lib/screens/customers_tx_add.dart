@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import "../widgets/custom_app_bar.dart";
-import "../providers/customers.dart";
 
-class CustomersAdd extends StatefulWidget {
-  static const routeName = '/customers_add';
+class CustomersTxAdd extends StatefulWidget {
+  static const routeName = "/customers_tx_add";
 
-  const CustomersAdd({Key? key}) : super(key: key);
+  CustomersTxAdd({Key? key}) : super(key: key);
 
   @override
-  State<CustomersAdd> createState() => _CustomersAddState();
+  _CustomersTxAddState createState() => _CustomersTxAddState();
 }
 
-class _CustomersAddState extends State<CustomersAdd> {
+class _CustomersTxAddState extends State<CustomersTxAdd> {
   final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> formData = {'name': null};
+  final Map<String, dynamic> formData = {'title': null, 'img': null};
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,9 @@ class _CustomersAddState extends State<CustomersAdd> {
 
         _formKey.currentState!.save();
 
-        await addCustomers(
-          name: formData["name"],
-        );
+        // await addCustomerTx(
+        //   title: formData["title"],
+        // );
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -34,7 +33,7 @@ class _CustomersAddState extends State<CustomersAdd> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Create Customer"),
+      appBar: const CustomAppBar(title: "Create History"),
       body: Column(
         children: [
           Form(
@@ -45,23 +44,38 @@ class _CustomersAddState extends State<CustomersAdd> {
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Name';
+                        return 'Please Enter Title';
                       }
                       return null;
                     },
                     decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Name',
+                      icon: Icon(Icons.title),
+                      labelText: 'Title',
                     ),
                     onSaved: (String? value) {
-                      formData['name'] = value;
+                      formData['title'] = value;
+                    },
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please Add Img';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.image),
+                      labelText: 'Image',
+                    ),
+                    onSaved: (String? value) {
+                      formData['image'] = value;
                     },
                   )
                 ],
               )),
           ElevatedButton(
             onPressed: handleUserInput,
-            child: const Text("Submit Customer"),
+            child: const Text("Submit History"),
           ),
         ],
       ),

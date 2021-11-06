@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "../widgets/custom_app_bar.dart";
-import "../widgets/customer_info.dart";
-import "../widgets/customer_history.dart";
+import '../widgets/customer_detailed_info.dart';
+import '../widgets/customer_tx_list.dart';
 import "../models/customer.dart";
 
 class CustomersTransaction extends StatelessWidget {
@@ -19,8 +19,8 @@ class CustomersTransaction extends StatelessWidget {
       appBar: CustomAppBar(title: "구매 내역"),
       body: Column(
         children: [
-          CustomerInfo(info: customer),
-          CustomerHistory(info: customer),
+          CustomerDetailedInfo(info: customer),
+          CustomerTxList(info: customer),
         ],
       ),
     );
