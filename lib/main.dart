@@ -37,9 +37,9 @@ class Main extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Transactions(),
         ),
-        StreamProvider<List<Customer>>.value(
+        StreamProvider<List<Customer>?>.value(
           value: CustomerStream().getCustomerList(),
-          initialData: const [],
+          initialData: null,
         )
         // 여기에 Provider 쭉쭉 추가하면 됩니다.
       ],
