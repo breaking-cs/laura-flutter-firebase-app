@@ -1,19 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import "../screens/login.dart";
 import "../screens/email_signin.dart";
-import '../utils/auth_service.dart';
+import '../providers/auth_service.dart';
 
 class EmailSignUp extends StatefulWidget {
   const EmailSignUp({Key? key}) : super(key: key);
-
-  /*
-  final bool isLoggedIn;
-  const EmailSignUp(this.isLoggedIn);
-   */
 
   @override
   _EmailSignUpState createState() => _EmailSignUpState();
@@ -33,7 +27,6 @@ class _EmailSignUpState extends State<EmailSignUp> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => EmailSignIn()),
-        //MaterialPageRoute(builder: (context) => EmailSignIn(isLoggedIn)),
       );
     }
     );
@@ -93,9 +86,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   return null;
                 },
               ),
-              const Padding(
-                padding: EdgeInsets.all(10),
-              ),
+
               TextFormField(
                 controller: _userPassword,
                 obscureText: true,
@@ -177,7 +168,6 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Login()),
-                    // MaterialPageRoute(builder: (context) => Login(isLoggedIn)),
                   );
                 },
               ),

@@ -1,3 +1,4 @@
+import 'package:app/providers/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class Main extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<Authentication>(
+          create: (_) => Authentication(),
+        ),
         ChangeNotifierProvider(
           create: (ctx) => Transactions(),
         ),
@@ -51,7 +55,7 @@ class Main extends StatelessWidget {
               bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
               bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
               subtitle1: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.black54,
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
@@ -59,7 +63,7 @@ class Main extends StatelessWidget {
           home: isLoggedIn ? const App() : const Login(),
           routes: {
             CustomersTransaction.routeName: (context) =>
-                const CustomersTransaction(),
+            const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
           }),
     );

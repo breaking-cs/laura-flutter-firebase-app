@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/auth_service.dart';
+import '../providers/auth_service.dart';
 import './app.dart';
 
 class EmailSignIn extends StatefulWidget {
   const EmailSignIn({Key? key}) : super(key: key);
 
-  /*
-  final bool isLoggedIn;
-  const EmailSignIn(this.isLoggedIn);
-   */
 
   @override
   _EmailSignInState createState() => _EmailSignInState();
@@ -43,13 +38,11 @@ class _EmailSignInState extends State<EmailSignIn> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const App()),
-        //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
       );
     }
     );
 
     setState(() {
-      //isLoggedIn = true;
       userId = _userEmail.text.trim();
       loginStatus = "success";
     });

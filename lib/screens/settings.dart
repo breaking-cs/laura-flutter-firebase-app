@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:material_dialogs/material_dialogs.dart';
-import '../utils/auth_service.dart';
+import '../providers/auth_service.dart';
 import './login.dart';
 
 class Settings extends StatefulWidget {

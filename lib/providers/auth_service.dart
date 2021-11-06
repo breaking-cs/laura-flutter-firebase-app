@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentication with ChangeNotifier {
-
+  Authentication({auth}) : _auth = auth ?? FirebaseAuth.instance;
   final FirebaseAuth _auth;
 
-  Authentication(this._auth);
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
 
