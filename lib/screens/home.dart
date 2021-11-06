@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:app/widgets/custom_app_bar.dart";
+import 'package:intl/intl.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({Key? key}) : super(key: key);
@@ -70,6 +71,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String? currentUserName = FirebaseAuth.instance.currentUser!.displayName;
+  String? currentTime = DateFormat('MM/dd EEEE').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(35),
+                    padding: const EdgeInsets.all(30),
                     alignment: Alignment.topLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,10 +154,11 @@ class _HomeState extends State<Home> {
                           ),
                           width: 300,
                           height: 550,
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.all(20),
+
                             child: Text(
-                              'Today,\n10/10 금요일',
+                              'Today,\n$currentTime',
                               style: TextStyle(
                                 fontSize: 25,
                               ),
