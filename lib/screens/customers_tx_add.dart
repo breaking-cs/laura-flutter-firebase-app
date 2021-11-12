@@ -54,7 +54,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
         ),
       ),
       body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -78,9 +78,8 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                           color: Colors.grey,
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide:BorderSide(
-                              color: Colors.indigo,
-                              width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.indigo, width: 2.0),
                         ),
                       ),
                       onSaved: (String? value) {
@@ -88,6 +87,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                       },
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -103,9 +103,8 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                           color: Colors.grey,
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide:BorderSide(
-                              color: Colors.indigo,
-                              width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.indigo, width: 2.0),
                         ),
                       ),
                       onSaved: (String? value) {
@@ -127,9 +126,8 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                           color: Colors.grey,
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide:BorderSide(
-                              color: Colors.indigo,
-                              width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.indigo, width: 2.0),
                         ),
                       ),
                       onSaved: (String? value) {
@@ -146,9 +144,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadiusDirectional.circular(10),
               ),
-              textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20),
+              textStyle: const TextStyle(color: Colors.white, fontSize: 20),
               onPressed: handleUserInput,
             ),
           ],
