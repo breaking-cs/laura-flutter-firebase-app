@@ -1,3 +1,4 @@
+import 'package:app/widgets/custom_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -18,16 +19,30 @@ class _EmailSignUpState extends State<EmailSignUp> {
   final _userName = TextEditingController();
   final _userEmail = TextEditingController();
   final _userPassword = TextEditingController();
-  // late bool isLoggedIn;
 
   Future<void> requestSignUp() async {
     await Authentication.signUpWithEmail(
         _userName.text.trim(), _userEmail.text.trim(),_userPassword.text.trim())
         .then((result) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => EmailSignIn()),
-      );
+          Dialogs.materialDialog(
+            title: 'Signed up!',
+            context: context,
+            actions: [
+              IconsButton(
+                text: 'Check',
+                iconData: Icons.check,
+                color: Colors.redAccent,
+                textStyle: const TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => EmailSignIn()),
+                  );
+                },
+              ),
+            ],
+          );
     }
     );
   }
@@ -35,15 +50,11 @@ class _EmailSignUpState extends State<EmailSignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Sign Up',
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      body: Padding(
+      resizeToAvoidBottomInset : true,
+      appBar: const CustomAppBar(title: "Sign Up"),
+      body: Center(
+      child: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Form(
           key: _formKey,
@@ -56,9 +67,17 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 maxLength: 10,
                 textCapitalization: TextCapitalization.characters,
                 decoration: const InputDecoration(
-                  labelText: 'Enter your username',
+                  labelText: 'Username',
+                  labelStyle: TextStyle(color: Colors.indigo),
+                  hintText: 'Enter your username',
                   suffixIcon: Icon(
                     Icons.account_circle,
+                    color: Colors.grey,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:BorderSide(
+                        color: Colors.indigo,
+                        width: 2.0),
                   ),
                 ),
                 validator: (input) {
@@ -72,9 +91,17 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 controller: _userEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
-                  labelText: 'Enter your email address',
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.indigo),
+                  hintText: 'Enter your email address',
                   suffixIcon: Icon(
                     Icons.email,
+                    color: Colors.grey,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:BorderSide(
+                        color: Colors.indigo,
+                        width: 2.0),
                   ),
                 ),
                 validator: (input) {
@@ -86,14 +113,22 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   return null;
                 },
               ),
-
+              SizedBox(height: 20),
               TextFormField(
                 controller: _userPassword,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: 'Enter your password',
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.indigo),
+                  hintText: 'Enter your password',
                   suffixIcon: Icon(
                     Icons.lock,
+                    color: Colors.grey,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:BorderSide(
+                        color: Colors.indigo,
+                        width: 2.0),
                   ),
                 ),
                 validator: (input) {
@@ -105,52 +140,22 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16.0),
               const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(20),
               ),
               IconsButton(
                 padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                text: 'REGISTER',
+                text: 'Register',
                 color: Colors.indigo,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadiusDirectional.circular(10),
+                  borderRadius: BorderRadiusDirectional.circular(10),
                 ),
                 textStyle: const TextStyle(color: Colors.white,
                     fontSize: 20),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-
-                    Dialogs.bottomMaterialDialog(
-                        msg: 'Are you sure to sign up with the information?',
-                        title: 'Sign Up',
-                        context: context,
-                        actions: [
-                          IconsButton(
-                            text: 'Cancel',
-                            iconData: Icons.cancel_outlined,
-                            color: Colors.grey,
-                            textStyle: const TextStyle(color: Colors.white),
-                            iconColor: Colors.white,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          IconsButton(
-                            text: 'Sign Up',
-                            iconData: Icons.check,
-                            color: Colors.indigo,
-                            textStyle: const TextStyle(color: Colors.white),
-                            iconColor: Colors.white,
-                            onPressed: () {
-                              requestSignUp();
-                              // TODO: Sing up이 완료됐다는 dialog
-                            },
-                          ),
-                        ],
-                    );
+                    requestSignUp();
                   }
                 },
               ),
@@ -174,6 +179,8 @@ class _EmailSignUpState extends State<EmailSignUp> {
             ],
           ),
         ),
+      ),
+      ),
       ),
     );
   }

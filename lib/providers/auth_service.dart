@@ -8,7 +8,6 @@ class Authentication with ChangeNotifier {
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-
   static Future<String?> signUpWithEmail(String name, String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     User? user;
@@ -28,6 +27,7 @@ class Authentication with ChangeNotifier {
     } on FirebaseAuthException catch(e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+
       }
       else{
         return e.message;

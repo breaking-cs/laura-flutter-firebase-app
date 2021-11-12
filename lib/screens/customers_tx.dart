@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "../widgets/custom_app_bar.dart";
-import '../providers/transactions.dart';
+import '../widgets/customer_detailed_info.dart';
+import '../widgets/customer_tx_list.dart';
 import "../models/customer.dart";
+import "../models/transaction.dart";
+import '../providers/transactions.dart';
 
 class CustomersTransaction extends StatelessWidget {
   static const routeName = '/customers_tx';
@@ -14,24 +17,34 @@ class CustomersTransaction extends StatelessWidget {
     final int index = ModalRoute.of(context)?.settings.arguments as int;
     final Customer customer = customerList[index];
 
-    return Scaffold(
-      appBar: CustomAppBar(title: "구매 내역"),
-      body: Column(
-        children: [
-          Text("고객: ${customer.name}"),
-          Text("CreatedAt: ${customer.createdAt}"),
-          ElevatedButton(
-            onPressed: () {
-              context.read<Transactions>().addTransaction(
-                    customerId: 123,
-                    amount: 1000,
-                    date: DateTime.now(),
-                    imgUrl: 'https://picsum.photos/400',
-                  );
-            },
-            child: const Text("Add Image"),
-          )
-        ],
+    // customer.id 이걸로 tx/customer.id/purchase 밑에거 가져와서 읽고 보여주고 하면됨
+    // tx/고객 document id/purchase 밑에 쭈욱다 transaction이다.
+    return StreamProvider<List<Transaction>?>(
+      create: (_) =>
+          TransactionStream(customerId: customer.id).getTransationList(),
+      initialData: null,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CustomerDetailedInfo(info: customer),
+              Expanded(
+                child: CustomerTxList(info: customer),
+              ),
+            ],
+          ),
+        ),
+        //floatingActionButton
       ),
     );
   }

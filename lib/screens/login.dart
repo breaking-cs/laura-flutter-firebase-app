@@ -22,7 +22,6 @@ class _LoginState extends State<Login>{
   String? userId;
   User? user;
 
-
   Future<void> autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userIdStorage = prefs.getString('user_id');

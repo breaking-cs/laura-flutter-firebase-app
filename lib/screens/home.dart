@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import "package:app/widgets/custom_app_bar.dart";
 import 'package:intl/intl.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key}) : super(key: key);
+  final String content;
+
+  const CustomCard({
+    Key? key,
+    required this.content,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +16,15 @@ class CustomCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+
       margin: const EdgeInsets.only(
         bottom: 30,
         left: 10,
         right: 10,
       ),
       child: Container(
-        child: Text("Hello"),
+        child: Text(content,
+          style: TextStyle(fontSize: 20),),
         padding: const EdgeInsets.all(10),
       ),
       elevation: 5,
@@ -34,6 +40,7 @@ class HomeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(30.0),
       width: double.infinity,
+      //height: 10,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -45,16 +52,14 @@ class HomeCard extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
+            childAspectRatio: MediaQuery.of(context).size.width /
+                (MediaQuery.of(context).size.height / 2),
             children: const <Widget>[
-              CustomCard(),
-              CustomCard(),
-              CustomCard(),
-              CustomCard(),
+              CustomCard(content: 'Visitors'),
+              CustomCard(content: 'Sales'),
+              CustomCard(content: 'Hello'),
+              CustomCard(content: 'Hola'),
             ],
-          ),
-          const ElevatedButton(
-            onPressed: null,
-            child: Text("더 보기"),
           ),
         ],
       ),
@@ -71,7 +76,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String? currentUserName = FirebaseAuth.instance.currentUser!.displayName;
-  String? currentTime = DateFormat('MM/dd EEEE').format(DateTime.now());
+  String? currentTime = DateFormat('MM/dd EE').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +95,7 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: EdgeInsets.all(20),
                         ),
                         const Text(
                           'Hello!',
@@ -99,15 +104,28 @@ class _HomeState extends State<Home> {
                             fontSize: 35,
                           ),
                         ),
-                        Text(
-                          '$currentUserName 사장님,',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                          ),
+                        Row(
+                          children:[
+                            Text(
+                            '$currentUserName',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              ' 사장님,',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                              ),
+                            ),
+                          ],
                         ),
+
                         const Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(15),
                         ),
                         const Text(
                           '오늘도\n힘내세요!',
@@ -153,10 +171,9 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                           width: 300,
-                          height: 550,
+                          height: 420,
                           child: Padding(
                             padding: EdgeInsets.all(20),
-
                             child: Text(
                               'Today,\n$currentTime',
                               style: TextStyle(
