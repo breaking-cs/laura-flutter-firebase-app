@@ -37,7 +37,9 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
   }
 
   void resetImage() {
-    _imageFile = null;
+    setState(() {
+      _imageFile = null;
+    });
   }
 
   @override
