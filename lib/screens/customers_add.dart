@@ -132,7 +132,7 @@ class _CustomersAddState extends State<CustomersAdd> {
                         RegExp regExp = RegExp(r'^010-([0-9]{4})-([0-9]{4})$');
 
                         if (value.length != 13 || !regExp.hasMatch(value)) {
-                          return 'Please Enter valid phoneNumber. Ex) 010-1234-5677';
+                          return 'Please Enter valid phone number. Ex) 010-1234-5677';
                         }
                         return null;
                       },
