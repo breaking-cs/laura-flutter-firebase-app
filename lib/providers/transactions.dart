@@ -38,6 +38,7 @@ Future<void> addTransactions(
       required String memo,
       String imgUrl = "",
     }) async {
+
   late final CollectionReference? txs;
   FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
   txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
@@ -49,6 +50,7 @@ Future<void> addTransactions(
     "imgUrl": imgUrl,
     'createdAt': Timestamp.now(),
   })
+
       .then((val) => print('customer Added'))
       .catchError((error) => print("Failed to Add Customers: $error"));
 }

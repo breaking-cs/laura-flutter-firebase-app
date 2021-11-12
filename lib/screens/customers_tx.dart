@@ -24,27 +24,15 @@ class CustomersTransaction extends StatelessWidget {
           TransactionStream(customerId: customer.id).getTransationList(),
       initialData: null,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
+        appBar: CustomAppBar(title: "구매 내역"),
+        body: Column(
+          children: [
+            CustomerDetailedInfo(info: customer),
+            Expanded(
+              child: CustomerTxList(info: customer),
+            ),
+          ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CustomerDetailedInfo(info: customer),
-              Expanded(
-                child: CustomerTxList(info: customer),
-              ),
-            ],
-          ),
-        ),
-        //floatingActionButton
       ),
     );
   }

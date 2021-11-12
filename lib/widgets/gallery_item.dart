@@ -20,10 +20,10 @@ class GalleryItem extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      child: Text("Hellp"), //Image.network(
-        //imgUrl,
-        //fit: BoxFit.cover,
-      //),
+      child: Text("Hellp"), // Image.network(
+      //   imgUrl,
+      //   fit: BoxFit.cover,
+      // ),
     );
   }
 }

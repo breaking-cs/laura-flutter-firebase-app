@@ -8,11 +8,14 @@ import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
 import './screens/customers_add.dart';
-import './providers/transactions.dart';
+import './screens/customers_tx_add.dart';
+import './screens/customer_tx_detail.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
 import './screens/customers_tx_add.dart';
 import './screens/customer_tx_detail.dart';
+import './models/transaction.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
