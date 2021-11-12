@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,12 +37,14 @@ class TransactionStream {
 }
 
 Future<String> uploadFile(String customerId, File imageFile) async {
+  User user = FirebaseAuth.instance.currentUser!;
+
   firebase_storage.TaskSnapshot uploadTask;
   String fileName = basename(imageFile.path);
   // Create a Reference to the file
   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
       .ref()
-      .child('$customerId/$fileName');
+      .child('${user.uid}/$customerId-$fileName');
 
   uploadTask = await ref.putFile(imageFile);
 
@@ -87,4 +90,19 @@ Future<void> deleteTransaction(String customerId, String hashcode) {
       .delete()
       .then((value) => print("User Deleted"))
       .catchError((error) => print("Failed to delete user: $error"));
+}
+
+Future<List<String>> listTxImages() async {
+  User user = FirebaseAuth.instance.currentUser!;
+  firebase_storage.ListResult result =
+      await firebase_storage.FirebaseStorage.instance.ref(user.uid).listAll();
+
+  Iterable<Future<String>> mappedList =
+      result.items.map((firebase_storage.Reference ref) async {
+    return await ref.getDownloadURL();
+  });
+
+  Future<List<String>> futureList = Future.wait(mappedList);
+  List<String> urlList = await futureList;
+  return urlList;
 }
