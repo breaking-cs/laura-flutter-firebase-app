@@ -13,12 +13,18 @@ class CustomerList extends StatefulWidget {
 class _CustomerListState extends State<CustomerList> {
   @override
   Widget build(BuildContext context) {
-    final customers = Provider.of<List<Customer>>(context);
+    final customers = Provider.of<List<Customer>?>(context);
+
+    if (customers == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return ListView.builder(
         itemCount: customers.length,
         itemBuilder: (context, index) {
-          return CustomerCard(index: index, data: customers[index]);
+          return Card(
+            child: CustomerCard(index: index, data: customers[index]),
+          );
         });
   }
 }

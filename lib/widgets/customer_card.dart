@@ -16,8 +16,11 @@ class CustomerCard extends StatelessWidget {
         icon: Icon(Icons.person),
         onPressed: null,
       ),
-      title: Text(data.name),
-      subtitle: Text(data.createdAt.toString()),
+      title: Text(data.name,
+        style: TextStyle(fontSize: 20),),
+      subtitle: Text(data.createdAt.toString(),
+        style: TextStyle(fontSize: 15),
+      ),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
@@ -30,6 +33,7 @@ class CustomerCard extends StatelessWidget {
           arguments: index,
         )
       },
+
     );
   }
 }
