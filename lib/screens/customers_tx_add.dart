@@ -69,6 +69,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                     },
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
