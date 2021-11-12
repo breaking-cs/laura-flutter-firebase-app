@@ -11,6 +11,8 @@ import './screens/customers_add.dart';
 import './providers/transactions.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
+import './screens/customers_tx_add.dart';
+import './screens/customer_tx_detail.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,12 +39,9 @@ class Main extends StatelessWidget {
         ChangeNotifierProvider<Authentication>(
           create: (_) => Authentication(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Transactions(),
-        ),
-        StreamProvider<List<Customer>>.value(
+        StreamProvider<List<Customer>?>.value(
           value: CustomerStream().getCustomerList(),
-          initialData: const [],
+          initialData: null,
         )
         // 여기에 Provider 쭉쭉 추가하면 됩니다.
       ],
@@ -60,11 +59,13 @@ class Main extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
+          debugShowCheckedModeBanner: false,
           home: isLoggedIn ? const App() : const Login(),
           routes: {
-            CustomersTransaction.routeName: (context) =>
-            const CustomersTransaction(),
+            CustomersTransaction.routeName: (context) => const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
+            CustomersTxAdd.routeName: (context) => CustomersTxAdd(),
+            TxDetail.routeName: (context) => TxDetail(),
           }),
     );
   }

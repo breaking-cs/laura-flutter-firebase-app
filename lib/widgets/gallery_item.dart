@@ -15,17 +15,15 @@ class GalleryItem extends StatelessWidget {
     return GridTile(
       footer: GridTileBar(
         backgroundColor: Colors.black54,
-        // leading: IconButton(icon: Icon(Icons.favorite), onPressed: null),
-        // trailing: IconButton(icon: Icon(Icons.shopping_cart), onPressed: null),
         title: Text(
           title,
           textAlign: TextAlign.center,
         ),
       ),
-      child: Image.network(
-        imgUrl,
-        fit: BoxFit.cover,
-      ),
+      child: Text("Hellp"), //Image.network(
+        //imgUrl,
+        //fit: BoxFit.cover,
+      //),
     );
   }
 }
