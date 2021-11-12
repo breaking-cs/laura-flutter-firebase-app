@@ -26,7 +26,7 @@ class _CustomerMainState extends State<CustomerMain> {
                 CustomersAdd.routeName,
               )
             },
-            child: const Text("Add Customers"),
+            child: const Text("Add Customer"),
           ),
         ],
       ),

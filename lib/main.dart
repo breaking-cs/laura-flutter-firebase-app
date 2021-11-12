@@ -7,9 +7,11 @@ import "./screens/login.dart";
 import "./screens/app.dart";
 import './screens/customers_tx.dart';
 import './screens/customers_add.dart';
-import './providers/transactions.dart';
+import './screens/customers_tx_add.dart';
+import './screens/customer_tx_detail.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
+import './models/transaction.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,12 +35,9 @@ class Main extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Transactions(),
-        ),
-        StreamProvider<List<Customer>>.value(
+        StreamProvider<List<Customer>?>.value(
           value: CustomerStream().getCustomerList(),
-          initialData: const [],
+          initialData: null,
         )
         // 여기에 Provider 쭉쭉 추가하면 됩니다.
       ],
@@ -61,6 +60,8 @@ class Main extends StatelessWidget {
             CustomersTransaction.routeName: (context) =>
                 const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
+            CustomersTxAdd.routeName: (context) => CustomersTxAdd(),
+            TxDetail.routeName: (context) => TxDetail(),
           }),
     );
   }

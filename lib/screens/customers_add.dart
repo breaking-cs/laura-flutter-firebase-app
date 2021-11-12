@@ -34,7 +34,7 @@ class _CustomersAddState extends State<CustomersAdd> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Create Customers"),
+      appBar: const CustomAppBar(title: "Create Customer"),
       body: Column(
         children: [
           Form(
@@ -61,7 +61,7 @@ class _CustomersAddState extends State<CustomersAdd> {
               )),
           ElevatedButton(
             onPressed: handleUserInput,
-            child: const Text("Add Customers"),
+            child: const Text("Submit Customer"),
           ),
         ],
       ),
