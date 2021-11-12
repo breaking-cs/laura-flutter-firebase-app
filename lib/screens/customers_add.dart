@@ -46,28 +46,20 @@ class _CustomersAddState extends State<CustomersAdd> {
       String newText = newValue.text;
 
       if (newText.length > 13) {
-        setState(() {
-          formData["phoneNumber"] = oldValue.text;
-        });
-
-        return TextEditingValue(
-            text: oldValue.text,
-            selection: TextSelection(
-                baseOffset: oldValue.text.length,
-                extentOffset: oldValue.text.length));
-      }
-
-      // TODO 커서를 위치를 옮기면 깨짐. 임시 방편으로 넣어둔거라.
-      if (oldValue.text.length < newValue.text.length) {
-        // 입력중
-        // 012 (3) 4567 (8) 9(10)(11)(12)
-        if (newValue.text.length == 3 || newValue.text.length == 8) {
-          newText += "-";
-        }
+        newText = oldValue.text;
       } else {
-        // 지우는 중
-        if (newValue.text.length == 4 || newValue.text.length == 9) {
-          newText = newText.substring(0, newText.length - 1);
+        // TODO 커서를 위치를 옮기면 깨짐. 임시 방편으로 넣어둔거라.
+        if (oldValue.text.length < newValue.text.length) {
+          // 입력중
+          // 012 (3) 4567 (8) 9(10)(11)(12)
+          if (newValue.text.length == 3 || newValue.text.length == 8) {
+            newText += "-";
+          }
+        } else {
+          // 지우는 중
+          if (newValue.text.length == 4 || newValue.text.length == 9) {
+            newText = newText.substring(0, newText.length - 1);
+          }
         }
       }
 
