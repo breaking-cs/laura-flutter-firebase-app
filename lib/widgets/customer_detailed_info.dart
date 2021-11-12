@@ -10,28 +10,33 @@ class CustomerDetailedInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Row(
-                children:[
-                  Text("${info.name}",
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                  Text("  고객님",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),),
-                ],
-              ),
-              Text("CreatedAt: ${formatDate(info.createdAt)}"),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  "${info.name}",
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "  고객님",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            Text("전화번호: ${info.phoneNumber}"),
+            Text("CreatedAt: ${formatDate(info.createdAt)}"),
+          ],
         ),
+      ),
     );
   }
 }
