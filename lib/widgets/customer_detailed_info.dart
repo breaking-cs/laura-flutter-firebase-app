@@ -17,6 +17,7 @@ class CustomerDetailedInfo extends StatelessWidget {
           child: Column(
             children: [
               Text("고객: ${info.name}"),
+              Text("전화번호: ${info.phoneNumber}"),
               Text("CreatedAt: ${formatDate(info.createdAt)}"),
             ],
           ),

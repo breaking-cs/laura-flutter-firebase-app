@@ -17,7 +17,13 @@ class CustomerCard extends StatelessWidget {
         onPressed: null,
       ),
       title: Text(data.name),
-      subtitle: Text(data.createdAt.toString()),
+      subtitle: Row(children: <Widget>[
+        const Icon(
+          Icons.phone,
+          color: Colors.grey,
+        ),
+        Text(data.phoneNumber),
+      ]),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {

@@ -36,6 +36,7 @@ class CustomerStream {
 
 Future<void> addCustomers({
   required String name,
+  required String phoneNumber,
 }) async {
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -47,6 +48,7 @@ Future<void> addCustomers({
     return customers
         .add({
           'name': name,
+          'phoneNumber': phoneNumber,
           'createdAt': Timestamp.now(),
         })
         .then((val) => print('customer Added'))
