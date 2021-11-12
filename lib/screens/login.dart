@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/screens/email_signup.dart';
 import 'package:app/screens/email_signin.dart';
 import 'package:app/screens/app.dart';
-import 'package:app/utils/auth_service.dart';
+import 'package:app/providers/auth_service.dart';
 
 class Login extends StatefulWidget{
   const Login({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class _LoginState extends State<Login>{
   String loginStatus = ""; // inProgress, failed, success
   String? userId;
   User? user;
-
 
   Future<void> autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,6 +44,8 @@ class _LoginState extends State<Login>{
 
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<Authentication>(context, listen: false);
+
     return Scaffold(
       backgroundColor: Colors.indigo,
       body: Center(

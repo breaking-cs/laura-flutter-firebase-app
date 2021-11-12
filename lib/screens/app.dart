@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/home.dart';
 import 'package:app/screens/customers_main.dart';
@@ -24,10 +25,10 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // Todo: https://www.youtube.com/watch?v=qj7jcuU2Z10 Navigation component 구성
     return Scaffold(
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).primaryColor,
           currentIndex: _currentIndex,
@@ -63,5 +64,55 @@ class _AppState extends State<App> {
             });
           }),
     );
+
+    /*
+    return CupertinoTabScaffold(
+      backgroundColor: Colors.white,
+      tabBar: CupertinoTabBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+            ),
+            label: "Customers",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.camera,
+            ),
+            label: "Gallery",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings,
+            ),
+            label: "Settings",
+          ),
+        ],
+      ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(child: Home());
+            });
+            break;
+          case 1:
+            return CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(child: Settings());
+            });
+            break;
+          default:
+            return const CupertinoTabView();
+        }
+      },
+    );
+     */
   }
 }

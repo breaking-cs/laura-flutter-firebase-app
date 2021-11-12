@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentication with ChangeNotifier {
-
+  Authentication({auth}) : _auth = auth ?? FirebaseAuth.instance;
   final FirebaseAuth _auth;
 
-  Authentication(this._auth);
   Stream<User?> get authStateChanges => _auth.authStateChanges();
-
 
   static Future<String?> signUpWithEmail(String name, String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -29,6 +27,7 @@ class Authentication with ChangeNotifier {
     } on FirebaseAuthException catch(e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+
       }
       else{
         return e.message;

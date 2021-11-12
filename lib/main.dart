@@ -1,3 +1,4 @@
+import 'package:app/providers/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,10 @@ import './screens/customers_tx_add.dart';
 import './screens/customer_tx_detail.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
+import './screens/customers_tx_add.dart';
+import './screens/customer_tx_detail.dart';
 import './models/transaction.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +39,9 @@ class Main extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<Authentication>(
+          create: (_) => Authentication(),
+        ),
         StreamProvider<List<Customer>?>.value(
           value: CustomerStream().getCustomerList(),
           initialData: null,
@@ -50,15 +57,15 @@ class Main extends StatelessWidget {
               bodyText1: TextStyle(color: Colors.teal, fontSize: 30),
               bodyText2: TextStyle(color: Colors.indigo, fontSize: 20),
               subtitle1: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.black54,
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
           ),
+          debugShowCheckedModeBanner: false,
           home: isLoggedIn ? const App() : const Login(),
           routes: {
-            CustomersTransaction.routeName: (context) =>
-                const CustomersTransaction(),
+            CustomersTransaction.routeName: (context) => const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
             CustomersTxAdd.routeName: (context) => CustomersTxAdd(),
             TxDetail.routeName: (context) => TxDetail(),

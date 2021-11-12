@@ -20,35 +20,37 @@ class TransactionStream {
     } else {
       return txs!
           .orderBy(
-            'createdAt',
-            descending: false,
-          )
+        'createdAt',
+        descending: false,
+      )
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => tx.Transaction.fromJson(
-                  doc.data() as Map<String, dynamic>, doc.id))
-              .toList());
+          .map((doc) => tx.Transaction.fromJson(
+          doc.data() as Map<String, dynamic>, doc.id))
+          .toList());
     }
   }
 }
 
 Future<void> addTransactions(
-  String customerId, {
-  required int amount,
-  required String memo,
-  String imgUrl = "",
-}) async {
+    String customerId, {
+      required int amount,
+      required String memo,
+      String imgUrl = "",
+    }) async {
+
   late final CollectionReference? txs;
   FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
   txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
 
   return txs
       .add({
-        'amount': amount,
-        "memo": memo,
-        "imgUrl": imgUrl,
-        'createdAt': Timestamp.now(),
-      })
+    'amount': amount,
+    "memo": memo,
+    "imgUrl": imgUrl,
+    'createdAt': Timestamp.now(),
+  })
+
       .then((val) => print('customer Added'))
       .catchError((error) => print("Failed to Add Customers: $error"));
 }

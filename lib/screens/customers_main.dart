@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import './customers_add.dart';
 import "../widgets/custom_app_bar.dart";
 import "../widgets/customer_list.dart";
@@ -16,19 +17,20 @@ class _CustomerMainState extends State<CustomerMain> {
     return Scaffold(
       appBar: const CustomAppBar(title: "Customers"),
       body: Column(
-        children: [
-          const Expanded(
+        children: <Widget>[
+          Expanded(
             child: CustomerList(),
           ),
-          ElevatedButton(
-            onPressed: () => {
-              Navigator.of(context).pushNamed(
-                CustomersAdd.routeName,
-              )
-            },
-            child: const Text("Add Customer"),
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.indigo,
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            CustomersAdd.routeName,
+          );
+        },
       ),
     );
   }

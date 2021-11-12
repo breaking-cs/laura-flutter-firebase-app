@@ -15,7 +15,9 @@ class Gallery extends StatelessWidget {
     return Text("hello");
     // Scaffold(
     //   appBar: const CustomAppBar(title: "Gallery"),
-    //   body: GridView.builder(
+    //   body: Padding(
+    //         padding: const EdgeInsets.all(18),
+    //         child: GridView.builder(
     //     padding: const EdgeInsets.all(10),
     //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
     //       crossAxisCount: 2,
@@ -31,6 +33,7 @@ class Gallery extends StatelessWidget {
     //       );
     //     },
     //   ),
+    //  ),
     // );
   }
 }

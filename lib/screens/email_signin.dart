@@ -1,17 +1,13 @@
+import 'package:app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/auth_service.dart';
+import 'package:app/screens/email_signup.dart';
+import '../providers/auth_service.dart';
 import './app.dart';
 
 class EmailSignIn extends StatefulWidget {
   const EmailSignIn({Key? key}) : super(key: key);
-
-  /*
-  final bool isLoggedIn;
-  const EmailSignIn(this.isLoggedIn);
-   */
 
   @override
   _EmailSignInState createState() => _EmailSignInState();
@@ -21,7 +17,6 @@ class _EmailSignInState extends State<EmailSignIn> {
   final _formKey = GlobalKey<FormState>();
   final _userEmail = TextEditingController();
   final _userPassword = TextEditingController();
-  //late bool isLoggedIn;
   late String loginStatus;
   Future? _loginFuture;
   String? userId;
@@ -32,9 +27,6 @@ class _EmailSignInState extends State<EmailSignIn> {
     });
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    //  TODO: 여기서 api 처리해줘야함, 에러처리도 여기서 해야할듯, 에러인 경우 error status를 보내줘야함
-    // TODO 비동기 처리하고, isLogInFailed, 를 내려주는 방식으로 일단 가쟝
-    // success라고 가정
     prefs.setString('user_id', _userEmail.text.trim());
 
     await Authentication.signInWithEmail(
@@ -43,13 +35,11 @@ class _EmailSignInState extends State<EmailSignIn> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const App()),
-        //MaterialPageRoute(builder: (context) => App(isLoggedIn)),
       );
     }
     );
 
     setState(() {
-      //isLoggedIn = true;
       userId = _userEmail.text.trim();
       loginStatus = "success";
     });
@@ -57,17 +47,9 @@ class _EmailSignInState extends State<EmailSignIn> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: InProgress, Failed일때 처리 해줘야함
-
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Sign In",
-        style: TextStyle(color: Colors.black),
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
-    ),
+      resizeToAvoidBottomInset : true,
+      appBar: const CustomAppBar(title: "Sign In"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
@@ -89,10 +71,29 @@ class _EmailSignInState extends State<EmailSignIn> {
                             controller: _userEmail,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
-                              labelText: 'Enter your email address',
+                              labelText: 'Email',
+                              labelStyle: TextStyle(color: Colors.indigo),
+                              hintText: 'Enter your email address',
                               suffixIcon: Icon(
                                 Icons.email,
+                                color: Colors.grey,
                               ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:BorderSide(
+                                    color: Colors.indigo,
+                                    width: 2.0),
+                              ),
+                              /*
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:BorderSide(
+                                    color: Colors.indigo,
+                                    width: 2.0),
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              */
                             ),
                             validator: (input) {
                               if (input!.isEmpty) {
@@ -107,9 +108,17 @@ class _EmailSignInState extends State<EmailSignIn> {
                             controller: _userPassword,
                             obscureText: true,
                             decoration: const InputDecoration(
-                              labelText: 'Enter your password',
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.indigo),
+                              hintText: 'Enter your password',
                               suffixIcon: Icon(
                                 Icons.lock,
+                                color: Colors.grey,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:BorderSide(
+                                    color: Colors.indigo,
+                                    width: 2.0),
                               ),
                             ),
                             validator: (input) {
@@ -121,26 +130,43 @@ class _EmailSignInState extends State<EmailSignIn> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16.0),
                           const Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(20),
                           ),
                           IconsButton(
                               padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                              text: 'LOGIN',
+                              text: 'Login',
                               color: Colors.indigo,
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadiusDirectional.circular(10),
+                                borderRadius: BorderRadiusDirectional.circular(10),
                               ),
-                              textStyle: const TextStyle(color: Colors.white,
-                                  fontSize: 20),
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20
+                              ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
                                   requestLogIn();
                                 }
                               }
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(10),
+                          ),
+                          GestureDetector(
+                            child: const Text("Don't have an account? SIGN UP!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline),
+                            ),
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const EmailSignUp()),
+                              );
+                            },
                           ),
                         ],
                       ),

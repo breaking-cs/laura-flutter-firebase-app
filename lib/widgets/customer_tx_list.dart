@@ -18,26 +18,29 @@ class CustomerTxList extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-              itemCount: txs.length,
-              itemBuilder: (context, index) {
-                return TxCard(
-                    index: index, customerId: info.id, data: txs[index]);
-              }),
+    return Scaffold(
+        body: Column(
+          children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: txs.length,
+                    itemBuilder: (context, index) {
+                      return TxCard(
+                          index: index, customerId: info.id, data: txs[index]);
+                    }),
+              ),
+            ],
         ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed(
-              CustomersTxAdd.routeName,
-              arguments: info.id,
-            );
-          },
-          child: const Text("Add History"),
-        )
-      ],
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.indigo,
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            CustomersTxAdd.routeName,
+            arguments: info.id,
+          );
+        },
+      ),
     );
   }
 }

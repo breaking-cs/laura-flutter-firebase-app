@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import "../widgets/custom_app_bar.dart";
 import '../providers/transactions.dart';
 
@@ -45,67 +46,113 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Create History"),
-      body: Column(
-        children: [
-          Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Memo';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.note),
-                      labelText: 'Memo',
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
+      body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter Memo';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Memo',
+                        labelStyle: TextStyle(color: Colors.indigo),
+                        suffixIcon: Icon(
+                          Icons.note,
+                          color: Colors.grey,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:BorderSide(
+                              color: Colors.indigo,
+                              width: 2.0),
+                        ),
+                      ),
+                      onSaved: (String? value) {
+                        formData['memo'] = value;
+                      },
                     ),
-                    onSaved: (String? value) {
-                      formData['memo'] = value;
-                    },
-                  ),
-                  TextFormField(
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Add Amount';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.money),
-                      labelText: 'Money',
+                    TextFormField(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Add Amount';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Money',
+                        labelStyle: TextStyle(color: Colors.indigo),
+                        suffixIcon: Icon(
+                          Icons.money,
+                          color: Colors.grey,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:BorderSide(
+                              color: Colors.indigo,
+                              width: 2.0),
+                        ),
+                      ),
+                      onSaved: (String? value) {
+                        formData['amount'] = value;
+                      },
                     ),
-                    onSaved: (String? value) {
-                      formData['amount'] = value;
-                    },
-                  ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Add Img';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.image),
-                      labelText: 'Image',
-                    ),
-                    onSaved: (String? value) {
-                      formData['imgUrl'] = value;
-                    },
-                  )
-                ],
-              )),
-          ElevatedButton(
-            onPressed: handleUserInput,
-            child: const Text("Submit History"),
-          ),
-        ],
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Add Img';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Image',
+                        labelStyle: TextStyle(color: Colors.indigo),
+                        suffixIcon: Icon(
+                          Icons.image,
+                          color: Colors.grey,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:BorderSide(
+                              color: Colors.indigo,
+                              width: 2.0),
+                        ),
+                      ),
+                      onSaved: (String? value) {
+                        formData['imgUrl'] = value;
+                      },
+                    )
+                  ],
+                )),
+            SizedBox(height: 40),
+            IconsButton(
+              padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+              text: 'Submit History',
+              color: Colors.indigo,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusDirectional.circular(10),
+              ),
+              textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20),
+              onPressed: handleUserInput,
+            ),
+          ],
+        ),
       ),
     );
   }

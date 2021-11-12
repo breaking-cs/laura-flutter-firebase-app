@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import "../widgets/custom_app_bar.dart";
 import "../providers/customers.dart";
 
@@ -32,10 +33,18 @@ class _CustomersAddState extends State<CustomersAdd> {
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
       }
     }
-
     return Scaffold(
-      appBar: const CustomAppBar(title: "Create Customer"),
-      body: Column(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
+      body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Form(
               key: _formKey,
@@ -50,20 +59,67 @@ class _CustomersAddState extends State<CustomersAdd> {
                       return null;
                     },
                     decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
                       labelText: 'Name',
+                      labelStyle: TextStyle(color: Colors.indigo),
+                      hintText:'Enter your customer\'s name',
+                      suffixIcon: Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide:BorderSide(
+                            color: Colors.indigo,
+                            width: 2.0),
+                      ),
                     ),
                     onSaved: (String? value) {
                       formData['name'] = value;
                     },
-                  )
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter phone number';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Phone number',
+                      labelStyle: TextStyle(color: Colors.indigo),
+                      hintText:'Enter your customer\'s phone number',
+                      suffixIcon: Icon(
+                        Icons.phone,
+                        color: Colors.grey,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                                borderSide:BorderSide(
+                                    color: Colors.indigo,
+                                    width: 2.0),
+                              ),
+                    ),
+                    onSaved: (String? value) {
+                      //formData['name'] = value;
+                      //TODO
+                    },
+                  ),
                 ],
               )),
-          ElevatedButton(
+          SizedBox(height: 60),
+          IconsButton(
+            padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+            text: 'Submit Customer',
+            color: Colors.indigo,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.circular(10),
+            ),
+            textStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 20),
             onPressed: handleUserInput,
-            child: const Text("Submit Customer"),
           ),
         ],
+      ),
       ),
     );
   }

@@ -10,18 +10,28 @@ class CustomerDetailedInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 30),
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              Text("고객: ${info.name}"),
+              Row(
+                children:[
+                  Text("${info.name}",
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  Text("  고객님",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),),
+                ],
+              ),
               Text("CreatedAt: ${formatDate(info.createdAt)}"),
             ],
           ),
         ),
-      ),
     );
   }
 }
