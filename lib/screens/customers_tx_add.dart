@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import "../widgets/custom_app_bar.dart";
 import '../providers/transactions.dart';
@@ -15,11 +17,30 @@ class CustomersTxAdd extends StatefulWidget {
 
 class _CustomersTxAddState extends State<CustomersTxAdd> {
   final _formKey = GlobalKey<FormState>();
+  final picker = ImagePicker();
+  File? _imageFile;
   final Map<String, dynamic> formData = {
     'amount': null,
     "memo": "",
-    "imgUrl": ""
   };
+
+  Future pickImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile == null) {
+        _imageFile = null;
+      } else {
+        _imageFile = File(pickedFile.path);
+      }
+    });
+  }
+
+  void resetImage() {
+    setState(() {
+      _imageFile = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +58,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
           customerId,
           memo: formData["memo"],
           amount: int.parse(formData["amount"]),
-          imgUrl: formData["imgUrl"],
+          imageFile: _imageFile,
         );
 
         Navigator.of(context).pop();
@@ -55,8 +76,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
             Form(
                 key: _formKey,
@@ -111,31 +131,45 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                         formData['amount'] = value;
                       },
                     ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Add Img';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Image',
-                        labelStyle: TextStyle(color: Colors.indigo),
-                        suffixIcon: Icon(
-                          Icons.image,
-                          color: Colors.grey,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.indigo, width: 2.0),
-                        ),
-                      ),
-                      onSaved: (String? value) {
-                        formData['imgUrl'] = value;
-                      },
-                    )
                   ],
                 )),
+            Container(
+              margin: EdgeInsets.only(top: 25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        child: const Icon(
+                          Icons.add_a_photo,
+                          size: 50,
+                        ),
+                        onPressed: pickImage,
+                      ),
+                      FlatButton(
+                        child: const Icon(
+                          Icons.remove_circle_outline,
+                          size: 50,
+                        ),
+                        onPressed: resetImage,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  _imageFile != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: Image.file(
+                            _imageFile!,
+                            width: 250,
+                            fit: BoxFit.fill,
+                          ))
+                      : Text("Please Select Image"),
+                ],
+              ),
+            ),
             SizedBox(height: 40),
             IconsButton(
               padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),

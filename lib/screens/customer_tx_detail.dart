@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import '../utils/date.dart';
 import "../widgets/custom_app_bar.dart";
+import '../widgets/gallery_item.dart';
 
 class TxDetail extends StatelessWidget {
   static const routeName = '/tx_detail';
@@ -17,14 +18,18 @@ class TxDetail extends StatelessWidget {
       appBar: const CustomAppBar(title: "Customers"),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Text("메모: ${info.memo}"),
-            Text("금액: ${info.amount}"),
-            Text("이미지: ${info.imgUrl}"),
-            Text("CreatedAt: ${formatDate(info.createdAt)}"),
-          ],
-        ),
+        child: Column(children: [
+          Text("메모: ${info.memo}"),
+          Text("금액: ${info.amount}"),
+          Text("CreatedAt: ${formatDate(info.createdAt)}"),
+          info.imgUrl == ""
+              ? Text("no image")
+              : Image.network(
+                  info.imgUrl,
+                  fit: BoxFit.cover,
+                  width: 200,
+                ),
+        ]),
       ),
     );
   }
