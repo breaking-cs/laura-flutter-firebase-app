@@ -49,11 +49,20 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset : true,
-      appBar: const CustomAppBar(title: "Sign In"),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('로그인',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
               FutureBuilder(
                 future: _loginFuture,
@@ -83,17 +92,6 @@ class _EmailSignInState extends State<EmailSignIn> {
                                     color: Colors.indigo,
                                     width: 2.0),
                               ),
-                              /*
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:BorderSide(
-                                    color: Colors.indigo,
-                                    width: 2.0),
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                              ),
-                              */
                             ),
                             validator: (input) {
                               if (input!.isEmpty) {
@@ -130,9 +128,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                               return null;
                             },
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(20),
-                          ),
+                          const SizedBox(height: 60),
                           IconsButton(
                               padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                               text: 'Login',
@@ -151,9 +147,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                                 }
                               }
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                          ),
+                          const SizedBox(height: 30),
                           GestureDetector(
                             child: const Text("Don't have an account? SIGN UP!",
                               textAlign: TextAlign.center,
@@ -175,7 +169,7 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
             ],
           ),
-        ),
+      ),
     );
   }
 }
