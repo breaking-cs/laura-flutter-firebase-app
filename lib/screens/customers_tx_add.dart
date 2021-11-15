@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -138,35 +139,68 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  SizedBox(height: 20),
+                  _imageFile != null
+                      ? Stack(
                     children: [
-                      FlatButton(
-                        child: const Icon(
-                          Icons.add_a_photo,
-                          size: 50,
+                      ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.file(
+                        _imageFile!,
+                        width: 200,
+                        height: 200,
+                        fit: BoxFit.fill,
+                      ),),
+                      Positioned(
+                        top: 0.0,
+                        right: 0.0,
+                        child: GestureDetector(
+                          onTap: resetImage,
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundColor: Colors.redAccent,
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
-                        onPressed: pickImage,
-                      ),
-                      FlatButton(
-                        child: const Icon(
-                          Icons.remove_circle_outline,
-                          size: 50,
-                        ),
-                        onPressed: resetImage,
                       ),
                     ],
-                  ),
-                  SizedBox(height: 15),
-                  _imageFile != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Image.file(
-                            _imageFile!,
-                            width: 250,
-                            fit: BoxFit.fill,
-                          ))
-                      : Text("Please Select Image"),
+                  )
+                      : FDottedLine(
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 200,
+                            width: 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FlatButton(
+                                child: const Icon(
+                                  Icons.add_a_photo,
+                                  color: Colors.grey,
+                                  size: 50,
+                                ),
+                                onPressed: pickImage,
+                              ),
+                              SizedBox(height: 20),
+                              Text("이미지를 선택하세요",
+                              style: TextStyle(fontSize: 20,
+                              color: Colors.grey),
+                                textAlign: TextAlign.center,),
+                            ],
+                          ),
+                          ),
+                          color: Colors.indigo,
+                          strokeWidth: 2,
+                          dottedLength: 10,
+                          space: 2,
+                          corner: FDottedLineCorner.all(10),
+                        ),
                 ],
               ),
             ),
