@@ -18,32 +18,31 @@ class TxDetail extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Created at: ${formatDate(info.createdAt)}",
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text("Memo: ${info.memo}",
-                    style: TextStyle(color: Colors.black),),
-                  SizedBox(height: 10),
+                    style: const TextStyle(color: Colors.black),),
+                  const SizedBox(height: 10),
                   Text("Price: ₩  ${info.amount}",
-                    style: TextStyle(color: Colors.black),),
-                  SizedBox(height: 50),
+                    style: const TextStyle(color: Colors.black),),
+                  const SizedBox(height: 50),
                 ],
               ),
               info.imgUrl == ""
-                  ? Text("no image")
+                  ? const Text("no image")
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
