@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:fdottedline/fdottedline.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -71,7 +71,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
       ),
@@ -135,11 +135,11 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                   ],
                 )),
             Container(
-              margin: EdgeInsets.only(top: 25),
+              margin: const EdgeInsets.only(top: 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _imageFile != null
                       ? Stack(
                     children: [
@@ -156,7 +156,7 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                         right: 0.0,
                         child: GestureDetector(
                           onTap: resetImage,
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.topRight,
                             child: CircleAvatar(
                               radius: 16,
@@ -171,40 +171,44 @@ class _CustomersTxAddState extends State<CustomersTxAdd> {
                       ),
                     ],
                   )
-                      : FDottedLine(
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 200,
-                            width: 200,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FlatButton(
-                                child: const Icon(
-                                  Icons.add_a_photo,
-                                  color: Colors.grey,
-                                  size: 50,
-                                ),
-                                onPressed: pickImage,
-                              ),
-                              SizedBox(height: 20),
-                              Text("이미지를 선택하세요",
-                              style: TextStyle(fontSize: 20,
-                              color: Colors.grey),
-                                textAlign: TextAlign.center,),
-                            ],
-                          ),
-                          ),
-                          color: Colors.indigo,
+                      : DottedBorder(
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(12),
+                          padding: const EdgeInsets.all(6),
+                          dashPattern: const [8, 4],
                           strokeWidth: 2,
-                          dottedLength: 10,
-                          space: 2,
-                          corner: FDottedLineCorner.all(10),
+                          color: Colors.indigo,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 200,
+                              width: 200,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FlatButton(
+                                    child: const Icon(
+                                      Icons.add_a_photo,
+                                      color: Colors.grey,
+                                      size: 50,
+                                    ),
+                                    onPressed: pickImage,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Text("이미지를 선택하세요",
+                                    style: TextStyle(fontSize: 20,
+                                        color: Colors.grey),
+                                    textAlign: TextAlign.center,),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                 ],
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             IconsButton(
               padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
               text: 'Submit History',
