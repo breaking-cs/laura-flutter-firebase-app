@@ -4,17 +4,33 @@ import 'package:provider/provider.dart';
 import "../widgets/custom_app_bar.dart";
 import '../widgets/customer_detailed_info.dart';
 import '../widgets/customer_tx_list.dart';
+import '../widgets/customer_main_info.dart';
 import "../models/customer.dart";
 import "../models/transaction.dart";
 import '../providers/transactions.dart';
+import "../models/transaction.dart" as tx;
 
-class CustomersTransaction extends StatelessWidget {
+class CustomersTransaction extends StatefulWidget {
   static const routeName = '/customers_tx';
   const CustomersTransaction({Key? key}) : super(key: key);
 
   @override
+  State<CustomersTransaction> createState() => _CustomersTransactionState();
+}
+
+class _CustomersTransactionState extends State<CustomersTransaction> {
+  int _txLength = 0;
+
+  void lengthSetter(int len) {
+    setState(() {
+      _txLength = len;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<Customer> customerList = Provider.of<List<Customer>>(context);
+
     final int index = ModalRoute.of(context)?.settings.arguments as int;
     final Customer customer = customerList[index];
 
@@ -27,7 +43,8 @@ class CustomersTransaction extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('고객 정보',
+          title: const Text(
+            '고객 정보',
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.transparent,
@@ -37,44 +54,20 @@ class CustomersTransaction extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
               Container(
                 child: Row(
-                  children:[
+                  children: [
                     SizedBox(
                       child: CustomerDetailedInfo(info: customer),
                       width: 200,
                     ),
                     Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children:[
-                          const Text('10 회',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            height: 1,
-                            width: double.maxFinite,
-                            color: Colors.white54,
-                          ),
-                          const SizedBox(height: 10),
-                          const Text('10,000 원',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: CustomerMainInfo(),
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.indigo,
