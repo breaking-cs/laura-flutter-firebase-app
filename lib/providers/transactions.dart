@@ -82,11 +82,13 @@ Future<void> addTransactions(
 
 Future<void> deleteTransaction(
     String customerId, String hashcode, String imgUrl) async {
+  // 개별 사진을 지움
+  await firebase_storage.FirebaseStorage.instance.refFromURL(imgUrl).delete();
+
+  // transaction 자체를 지움
   late final CollectionReference? txs;
   FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
   txs = _fireStoreDatabase.collection('tx/$customerId/purchase');
-
-  await firebase_storage.FirebaseStorage.instance.refFromURL(imgUrl).delete();
 
   return txs
       .doc(hashcode.toString())
