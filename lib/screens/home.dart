@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class CustomCard extends StatelessWidget {
@@ -17,23 +16,15 @@ class CustomCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+
       margin: const EdgeInsets.only(
         bottom: 30,
         left: 10,
         right: 10,
       ),
       child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('150',
-              style: TextStyle(fontSize: 40),),
-            const SizedBox(height: 10),
-            Text(content,
-              style: TextStyle(fontSize: 15),),
-          ],
-        ),
+        child: Text(content,
+          style: TextStyle(fontSize: 20),),
         padding: const EdgeInsets.all(10),
       ),
       elevation: 5,
@@ -49,6 +40,7 @@ class HomeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(30.0),
       width: double.infinity,
+      //height: 10,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -66,7 +58,7 @@ class HomeCard extends StatelessWidget {
               CustomCard(content: 'Visitors'),
               CustomCard(content: 'Sales'),
               CustomCard(content: 'Hello'),
-              CustomCard(content: 'Hi'),
+              CustomCard(content: 'Hola'),
             ],
           ),
         ],
@@ -116,21 +108,22 @@ class _HomeState extends State<Home> {
                           children:[
                             Text(
                             '$currentUserName',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const Text(
+                            Text(
                               ' 사장님,',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 30,
                               ),
                             ),
                           ],
                         ),
+
                         const Padding(
                           padding: EdgeInsets.all(15),
                         ),
@@ -149,13 +142,13 @@ class _HomeState extends State<Home> {
                     overflow: Overflow.visible,
                     children: [
                       Container(),
-                      const Positioned(
+                      Positioned(
                         right: 20,
                         top: -170,
-                        child: SizedBox(
+                        child: Container(
                           width: 170,
                           height: 170,
-                          child: Image(
+                          child: const Image(
                             image: AssetImage('assets/flower_w.png'),
                           ),
                         ),
@@ -168,7 +161,7 @@ class _HomeState extends State<Home> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadiusDirectional.circular(20),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.black54,
                                 blurRadius: 15.0,
@@ -180,10 +173,10 @@ class _HomeState extends State<Home> {
                           width: 300,
                           height: 420,
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: EdgeInsets.all(20),
                             child: Text(
                               'Today,\n$currentTime',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 25,
                               ),
                             ),

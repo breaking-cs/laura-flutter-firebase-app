@@ -43,30 +43,23 @@ class _EmailSignUpState extends State<EmailSignUp> {
               ),
             ],
           );
-      });
+    }
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset : true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('회원가입',
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-      ),
-      body: SingleChildScrollView(
+      appBar: const CustomAppBar(title: "Sign Up"),
+      body: Center(
+      child: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
                 controller: _userName,
@@ -120,7 +113,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _userPassword,
                 obscureText: true,
@@ -147,7 +140,9 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   return null;
                 },
               ),
-              const SizedBox(height: 60),
+              const Padding(
+                padding: EdgeInsets.all(20),
+              ),
               IconsButton(
                 padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                 text: 'Register',
@@ -164,7 +159,9 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   }
                 },
               ),
-              const SizedBox(height: 30),
+              const Padding(
+                padding: EdgeInsets.all(10),
+              ),
               GestureDetector(
                 child: const Text('Already have an account? CLICK HERE',
                   textAlign: TextAlign.center,
@@ -184,7 +181,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
         ),
       ),
       ),
-
+      ),
     );
   }
 }

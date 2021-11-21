@@ -22,7 +22,9 @@ class _CustomerListState extends State<CustomerList> {
     return ListView.builder(
         itemCount: customers.length,
         itemBuilder: (context, index) {
-          return CustomerCard(index: index, data: customers[index]);
+          return Card(
+            child: CustomerCard(index: index, data: customers[index]),
+          );
         });
   }
 }
