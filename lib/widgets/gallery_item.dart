@@ -17,11 +17,11 @@ class GalleryItem extends StatelessWidget {
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
 
-          return Center(child: Text('Loading...'));
+          return const Center(child: Text('Loading...'));
           // You can use LinearProgressIndicator or CircularProgressIndicator instead
         },
         errorBuilder: (context, error, stackTrace) =>
-            Text('Some errors occurred!'),
+            const Text('Some errors occurred!'),
       ),
     );
   }
