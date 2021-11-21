@@ -11,29 +11,37 @@ class CustomerDetailedInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(32),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  "${info.name}",
-                  style: TextStyle(
-                    fontSize: 35,
+                  info.name,
+                  style: const TextStyle(
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  "  고객님",
+                const Text(
+                  "고객님",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
               ],
             ),
-            Text("전화번호: ${info.phoneNumber}"),
-            Text("CreatedAt: ${formatDate(info.createdAt)}"),
+            const SizedBox(height: 10),
+            Text(info.phoneNumber,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
           ],
         ),
       ),
