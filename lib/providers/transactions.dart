@@ -80,10 +80,13 @@ Future<void> addTransactions(
       .catchError((error) => print("Failed to Add Customers: $error"));
 }
 
-Future<void> deleteTransaction(String customerId, String hashcode) {
+Future<void> deleteTransaction(
+    String customerId, String hashcode, String imgUrl) async {
   late final CollectionReference? txs;
   FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
-  txs = _fireStoreDatabase.collection('tx/${customerId}/purchase');
+  txs = _fireStoreDatabase.collection('tx/$customerId/purchase');
+
+  await firebase_storage.FirebaseStorage.instance.refFromURL(imgUrl).delete();
 
   return txs
       .doc(hashcode.toString())

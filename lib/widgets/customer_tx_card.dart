@@ -27,7 +27,7 @@ class TxCard extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
-          deleteTransaction(customerId, data.id);
+          deleteTransaction(customerId, data.id, data.imgUrl);
         },
       ),
       onTap: () => {
