@@ -24,11 +24,13 @@ class _EditProfileState extends State<EditProfile> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: Colors.black,
         ),
       ),
-      body: Column(
+      body: Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               FutureBuilder(
                 future: _profileFuture,
@@ -47,8 +49,8 @@ class _EditProfileState extends State<EditProfile> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const SizedBox(height: 60),
-                              const Text(
+                              SizedBox(height: 60),
+                              Text(
                                 'User name',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -79,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 60),
+                              SizedBox(height: 60),
                               IconsButton(
                                 padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                                 text: 'Save',
@@ -89,14 +91,12 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 textStyle: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20
-                                ),
+                                    fontSize: 20),
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
                                       await _auth.currentUser!.updateDisplayName( _userName.text.trim());
                                       _auth.currentUser!.reload();
-
                                       Dialogs.materialDialog(
                                         title: 'Updated!',
                                         context: context,
@@ -117,7 +117,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       );
                                     }
-                                  },
+                                },
                               ),
                             ],
                           ),
@@ -128,6 +128,7 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
             ],
+        ),
       ),
     );
   }

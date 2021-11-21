@@ -41,12 +41,10 @@ dependencies:
   google_sign_in: ^5.1.1
   flutter_signin_button: ^2.0.0
   material_dialogs:
-  persistent_bottom_nav_bar: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  dotted_border:
   shared_preferences: ^2.0.8
   provider: ^6.0.1
   intl:
