@@ -1,3 +1,3 @@
 String formatDate(DateTime tx) {
-  return "${tx.year.toString()}.${tx.month.toString()}.${tx.day.toString()}";
+  return "${tx.year.toString()}년 ${tx.month.toString()}월 ${tx.day.toString()}일";
 }

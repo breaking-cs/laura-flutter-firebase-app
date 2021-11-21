@@ -31,8 +31,8 @@ class _GalleryState extends State<Gallery> {
     }
 
     if (transactions!.length == 0) {
-      return const Scaffold(
-        appBar: CustomAppBar(title: "Gallery"),
+      return Scaffold(
+        appBar: const CustomAppBar(title: "Gallery"),
         body: Text("사진을 추가해 주세요"),
       );
     }
@@ -40,8 +40,9 @@ class _GalleryState extends State<Gallery> {
     return Scaffold(
       appBar: const CustomAppBar(title: "Gallery"),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(18),
         child: GridView.builder(
+          padding: const EdgeInsets.all(10),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
@@ -49,11 +50,8 @@ class _GalleryState extends State<Gallery> {
           ),
           itemCount: transactions!.length,
           itemBuilder: (ctx, index) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: GalleryItem(
-                imgUrl: transactions![index],
-              ),
+            return GalleryItem(
+              imgUrl: transactions![index],
             );
           },
         ),

@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/customer.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../models/transaction.dart' as tx;
+import "../providers/transactions.dart";
 
 class CustomerStream {
   late final FirebaseFirestore _fireStoreDatabase;
@@ -58,13 +61,29 @@ Future<void> addCustomers({
   }
 }
 
-Future<void> deleteCustomer(String hashcode) {
+Future<void> deleteCustomer(String hashcode) async {
   final User? user = FirebaseAuth.instance.currentUser;
 
   if (user != null) {
     String uid = user.uid;
     CollectionReference? customers =
         FirebaseFirestore.instance.collection('users/$uid/customers');
+
+    // tx도 하나하나 삭제하긴해야함
+    FirebaseFirestore _fireStoreDatabase = FirebaseFirestore.instance;
+
+    var result =
+        await _fireStoreDatabase.collection('tx/$hashcode/purchase').get();
+
+    result.docs.forEach((doc) async {
+      // 이건 고객의 transaction의 이미지를 삭제하는것
+      await firebase_storage.FirebaseStorage.instance
+          .refFromURL(doc['imgUrl'])
+          .delete();
+
+      // tr을 삭제
+      doc.reference.delete();
+    });
 
     return customers
         .doc(hashcode.toString())
