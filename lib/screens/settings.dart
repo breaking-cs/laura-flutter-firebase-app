@@ -44,27 +44,27 @@ class _SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 30),
-                  Text(
+                  const SizedBox(height: 30),
+                  const Text(
                     'User name',
                     style: TextStyle(color: Colors.grey, fontSize: 20),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     '${currentUser!.displayName}',
-                    style: TextStyle(color: Colors.black, fontSize: 25),
+                    style: const TextStyle(color: Colors.black, fontSize: 25),
                   ),
-                  SizedBox(height: 40),
-                  Text(
+                  const SizedBox(height: 40),
+                  const Text(
                     'Email',
                     style: TextStyle(color: Colors.grey, fontSize: 20),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     '${currentUser!.email}',
-                    style: TextStyle(color: Colors.black, fontSize: 25),
+                    style: const TextStyle(color: Colors.black, fontSize: 25),
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   IconsButton(
                     padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                     text: 'Edit Profile',
@@ -85,7 +85,7 @@ class _SettingsState extends State<Settings> {
                 ],
               ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20),
           ),
           Container(
@@ -97,30 +97,30 @@ class _SettingsState extends State<Settings> {
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 50),
-                Text(
+                const SizedBox(height: 50),
+                const Text(
                   'Laura v1.0',
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 IconsButton(
                   padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                   text: 'Logout',
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusDirectional.circular(10),
-                    side: BorderSide(color: Colors.grey),
+                    side: const BorderSide(color: Colors.grey),
                   ),
                   textStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 20),
                   onPressed: () {
                     Dialogs.materialDialog(
-                      msg: 'Are you sure to logout?',
-                      title: 'Logout',
+                      msg: '로그아웃 하시겠습니까?',
+                      // title: '로그아웃',
                       context: context,
                       actions: [
                         IconsButton(
-                          text: 'Cancel',
+                          text: '취소',
                           iconData: Icons.cancel_outlined,
                           color: Colors.grey,
                           textStyle: const TextStyle(color: Colors.white),
@@ -130,7 +130,7 @@ class _SettingsState extends State<Settings> {
                           },
                         ),
                         IconsButton(
-                          text: 'Logout',
+                          text: '로그아웃',
                           iconData: Icons.logout,
                           color: Colors.redAccent,
                           textStyle: const TextStyle(color: Colors.white),
