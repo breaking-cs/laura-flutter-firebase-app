@@ -11,31 +11,37 @@ class CustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const IconButton(
-        icon: Icon(Icons.person),
-        onPressed: null,
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color:Colors.black12),),
       ),
-      title: Text(
-        data.name,
-        style: TextStyle(fontSize: 20),
-      ),
-      subtitle: Text(
-        data.phoneNumber,
-        style: TextStyle(fontSize: 15),
-      ),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: () {
-          deleteCustomer(data.id);
+      child: ListTile(
+        leading: const IconButton(
+          icon: Icon(Icons.account_circle),
+          onPressed: null,
+        ),
+        title: Text(
+          data.name,
+          style: const TextStyle(fontSize: 20),
+        ),
+        subtitle: Text(
+          data.phoneNumber,
+          style: const TextStyle(fontSize: 15),
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {
+            deleteCustomer(data.id);
+          },
+        ),
+        onTap: () => {
+          Navigator.of(context).pushNamed(
+            CustomersTransaction.routeName,
+            arguments: index,
+          )
         },
       ),
-      onTap: () => {
-        Navigator.of(context).pushNamed(
-          CustomersTransaction.routeName,
-          arguments: index,
-        )
-      },
     );
   }
 }

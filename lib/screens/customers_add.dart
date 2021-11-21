@@ -86,7 +86,6 @@ class _CustomersAddState extends State<CustomersAdd> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Form(
                 key: _formKey,

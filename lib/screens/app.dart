@@ -20,7 +20,6 @@ class _AppState extends State<App> {
     Center(child: CustomerMain()),
     Center(child: Gallery()),
     Center(child: Settings()),
-    // Center(child: Settings(isLoggedIn)),
   ];
 
   @override
@@ -28,7 +27,6 @@ class _AppState extends State<App> {
     return Scaffold(
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).primaryColor,
           currentIndex: _currentIndex,
@@ -64,11 +62,11 @@ class _AppState extends State<App> {
             });
           }),
     );
-
     /*
     return CupertinoTabScaffold(
-      backgroundColor: Colors.white,
       tabBar: CupertinoTabBar(
+        backgroundColor: Colors.white,
+        activeColor: Theme.of(context).primaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -105,6 +103,16 @@ class _AppState extends State<App> {
             break;
           case 1:
             return CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(child: CustomerMain());
+            });
+            break;
+          case 2:
+            return CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(child: Gallery());
+            });
+            break;
+          case 3:
+            return CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(child: Settings());
             });
             break;
@@ -113,6 +121,8 @@ class _AppState extends State<App> {
         }
       },
     );
+
      */
+
   }
 }
