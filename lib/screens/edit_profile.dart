@@ -1,9 +1,7 @@
-import 'package:app/screens/settings.dart';
-import 'package:app/widgets/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'app.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -20,6 +18,23 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    void handleUserInput() async {
+      if (_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Updated username')));
+
+        _formKey.currentState!.save();
+        await _auth.currentUser!.updateDisplayName( _userName.text.trim());
+
+        _auth.currentUser!.reload();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const App()),
+        );
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -91,33 +106,7 @@ class _EditProfileState extends State<EditProfile> {
                                     color: Colors.white,
                                     fontSize: 20
                                 ),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                      await _auth.currentUser!.updateDisplayName( _userName.text.trim());
-                                      _auth.currentUser!.reload();
-
-                                      Dialogs.materialDialog(
-                                        title: 'Updated!',
-                                        context: context,
-                                        actions: [
-                                          IconsButton(
-                                            text: 'Check',
-                                            iconData: Icons.check,
-                                            color: Colors.redAccent,
-                                            textStyle: const TextStyle(color: Colors.white),
-                                            iconColor: Colors.white,
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => const Settings()),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  },
+                                onPressed: handleUserInput,
                               ),
                             ],
                           ),
