@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/customer.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../models/transaction.dart' as tx;
-import "../providers/transactions.dart";
 
 class CustomerStream {
   late final FirebaseFirestore _fireStoreDatabase;
@@ -94,3 +92,23 @@ Future<void> deleteCustomer(String hashcode) async {
     return Future.value();
   }
 }
+/*
+Future<void> updateCustomerAmount({
+  required int totalAmount,
+}) async {
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    String uid = user.uid;
+    CollectionReference? customers =
+    FirebaseFirestore.instance.collection('users/$uid/customers');
+
+    return customers.doc(id)
+        .update({'totalAmount': totalAmount,})
+        .then((val) => print('Updated total amount'))
+        .catchError((error) => print("Failed to total amount: $error"));
+  } else {
+    return Future.value();
+  }
+}
+ */

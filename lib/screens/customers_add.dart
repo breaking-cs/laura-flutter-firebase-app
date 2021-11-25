@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:flutter/services.dart';
-import "../widgets/custom_app_bar.dart";
 import "../providers/customers.dart";
 
 class CustomersAdd extends StatefulWidget {
@@ -79,7 +78,7 @@ class _CustomersAddState extends State<CustomersAdd> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
       ),
@@ -117,7 +116,7 @@ class _CustomersAddState extends State<CustomersAdd> {
                         formData['name'] = value;
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -155,7 +154,7 @@ class _CustomersAddState extends State<CustomersAdd> {
                     ),
                   ],
                 )),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             IconsButton(
               padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
               text: 'Submit Customer',

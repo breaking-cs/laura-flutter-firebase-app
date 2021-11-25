@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import "../widgets/custom_app_bar.dart";
 import '../widgets/customer_detailed_info.dart';
 import '../widgets/customer_tx_list.dart';
 import '../widgets/customer_main_info.dart';
 import "../models/customer.dart";
 import "../models/transaction.dart";
 import '../providers/transactions.dart';
-import "../models/transaction.dart" as tx;
 
 class CustomersTransaction extends StatefulWidget {
   static const routeName = '/customers_tx';
@@ -67,7 +65,7 @@ class _CustomersTransactionState extends State<CustomersTransaction> {
                       width: 200,
                     ),
                     Container(
-                      child: CustomerMainInfo(),
+                      child: const CustomerMainInfo(),
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.indigo,
