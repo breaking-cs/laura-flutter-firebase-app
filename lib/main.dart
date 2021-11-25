@@ -12,10 +12,6 @@ import './screens/customers_tx_add.dart';
 import './screens/customer_tx_detail.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
-import './screens/customers_tx_add.dart';
-import './screens/customer_tx_detail.dart';
-import './models/transaction.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,8 +63,8 @@ class Main extends StatelessWidget {
           routes: {
             CustomersTransaction.routeName: (context) => const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
-            CustomersTxAdd.routeName: (context) => CustomersTxAdd(),
-            TxDetail.routeName: (context) => TxDetail(),
+            CustomersTxAdd.routeName: (context) => const CustomersTxAdd(),
+            TxDetail.routeName: (context) => const TxDetail(),
           }),
     );
   }

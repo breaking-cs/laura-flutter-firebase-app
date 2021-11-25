@@ -18,6 +18,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
 
+
   Future<void> requestLogOut() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -27,7 +28,7 @@ class _SettingsState extends State<Settings> {
       Authentication.signOut().then((res) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => Login()),
+            MaterialPageRoute(builder: (context) => const Login()),
             (Route<dynamic> route) => false);
       });
     });
@@ -44,7 +45,7 @@ class _SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   const Text(
                     'User name',
                     style: TextStyle(color: Colors.grey, fontSize: 20),
@@ -67,27 +68,25 @@ class _SettingsState extends State<Settings> {
                   const SizedBox(height: 50),
                   IconsButton(
                     padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                    text: 'Edit Profile',
+                    text: '프로필 수정',
                     color: Colors.indigo,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusDirectional.circular(10),
                     ),
                     textStyle: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20),
+                        fontSize: 20,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const EditProfile()),
-                      );
+                        MaterialPageRoute(builder: (context) => const EditProfile()),);
                     },
                   ),
                 ],
               ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(20),
-          ),
+          const SizedBox(height: 50),
           Container(
             height: 10,
             color: Colors.black12,
@@ -102,10 +101,10 @@ class _SettingsState extends State<Settings> {
                   'Laura v1.0',
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
                 IconsButton(
                   padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                  text: 'Logout',
+                  text: '로그아웃',
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusDirectional.circular(10),
                     side: const BorderSide(color: Colors.grey),
