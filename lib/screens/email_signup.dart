@@ -20,44 +20,44 @@ class _EmailSignUpState extends State<EmailSignUp> {
   final _userEmail = TextEditingController();
   final _userPassword = TextEditingController();
 
-  Future<void> requestSignUp() async {
-    await Authentication.signUpWithEmail(
-        _userName.text.trim(), _userEmail.text.trim(),_userPassword.text.trim())
+  void requestSignUp() {
+    Authentication.signUpWithEmail(_userName.text.trim(),
+            _userEmail.text.trim(), _userPassword.text.trim())
         .then((result) {
-          Dialogs.materialDialog(
-            title: 'Signed up!',
-            context: context,
-            actions: [
-              IconsButton(
-                text: 'Check',
-                iconData: Icons.check,
-                color: Colors.redAccent,
-                textStyle: const TextStyle(color: Colors.white),
-                iconColor: Colors.white,
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => EmailSignIn()),
-                  );
-                },
-              ),
-            ],
-          );
-      }).catchError((err) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              duration: const Duration(seconds: 2),
-              content: Text(err.message),
-              backgroundColor: Colors.red,
-            ),
-          );
-      });
+      Dialogs.materialDialog(
+        title: 'Signed up!',
+        context: context,
+        actions: [
+          IconsButton(
+            text: 'Check',
+            iconData: Icons.check,
+            color: Colors.redAccent,
+            textStyle: const TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => EmailSignIn()),
+              );
+            },
+          ),
+        ],
+      );
+    }).catchError((err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 2),
+          content: Text(err.message),
+          backgroundColor: Colors.red,
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -91,9 +91,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                       color: Colors.grey,
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide:BorderSide(
-                          color: Colors.indigo,
-                          width: 2.0),
+                      borderSide: BorderSide(color: Colors.indigo, width: 2.0),
                     ),
                   ),
                   validator: (input) {
@@ -115,9 +113,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                       color: Colors.grey,
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide:BorderSide(
-                          color: Colors.indigo,
-                          width: 2.0),
+                      borderSide: BorderSide(color: Colors.indigo, width: 2.0),
                     ),
                   ),
                   validator: (input) {
@@ -142,9 +138,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                       color: Colors.grey,
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide:BorderSide(
-                          color: Colors.indigo,
-                          width: 2.0),
+                      borderSide: BorderSide(color: Colors.indigo, width: 2.0),
                     ),
                   ),
                   validator: (input) {
@@ -164,8 +158,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusDirectional.circular(10),
                   ),
-                  textStyle: const TextStyle(color: Colors.white,
-                      fontSize: 20),
+                  textStyle: const TextStyle(color: Colors.white, fontSize: 20),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
@@ -175,11 +168,11 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  child: const Text('Already have an account? CLICK HERE',
+                  child: const Text(
+                    'Already have an account? CLICK HERE',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 15,
-                        decoration: TextDecoration.underline),
+                        fontSize: 15, decoration: TextDecoration.underline),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -193,7 +186,6 @@ class _EmailSignUpState extends State<EmailSignUp> {
           ),
         ),
       ),
-
     );
   }
 }
