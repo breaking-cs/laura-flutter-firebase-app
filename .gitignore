@@ -49,3 +49,4 @@ app.*.map.json
 /android/._gradlew.bat
 /android/gradle/._wrapper
 /android/gradle/wrapper
+/android/key.properties
