@@ -29,27 +29,28 @@ class _EmailSignInState extends State<EmailSignIn> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user_id', _userEmail.text.trim());
 
-    await Authentication.signInWithEmail(
-        _userEmail.text.trim(),_userPassword.text.trim())
-        .then((result) {
+    var result = await Authentication.signInWithEmail(
+        _userEmail.text.trim(), _userPassword.text.trim());
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(result[1])));
+
+    if (result[0] == "success") {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const App()),);
-    });
-
-    setState(() {
-      userId = _userEmail.text.trim();
-      loginStatus = "success";
-    });
+        MaterialPageRoute(builder: (context) => const App()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('로그인',
+        title: const Text(
+          '로그인',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.transparent,
@@ -86,9 +87,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                             color: Colors.grey,
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide:BorderSide(
-                                color: Colors.indigo,
-                                width: 2.0),
+                            borderSide:
+                                BorderSide(color: Colors.indigo, width: 2.0),
                           ),
                         ),
                         validator: (input) {
@@ -112,9 +112,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                             color: Colors.grey,
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide:BorderSide(
-                                color: Colors.indigo,
-                                width: 2.0),
+                            borderSide:
+                                BorderSide(color: Colors.indigo, width: 2.0),
                           ),
                         ),
                         validator: (input) {
@@ -135,28 +134,27 @@ class _EmailSignInState extends State<EmailSignIn> {
                             borderRadius: BorderRadiusDirectional.circular(10),
                           ),
                           textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
-                          ),
+                              color: Colors.white, fontSize: 20),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               requestLogIn();
                             }
-                          }
-                      ),
+                          }),
                       const SizedBox(height: 30),
                       GestureDetector(
-                        child: const Text("Don't have an account? SIGN UP!",
+                        child: const Text(
+                          "Don't have an account? SIGN UP!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 15,
                               decoration: TextDecoration.underline),
                         ),
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const EmailSignUp()),
+                            MaterialPageRoute(
+                                builder: (context) => const EmailSignUp()),
                           );
                         },
                       ),

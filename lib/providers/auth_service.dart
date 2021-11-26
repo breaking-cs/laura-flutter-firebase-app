@@ -8,7 +8,8 @@ class Authentication with ChangeNotifier {
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  static Future<String?> signUpWithEmail(String name, String email, String password) async {
+  static Future<String?> signUpWithEmail(
+      String name, String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     User? user;
 
@@ -24,18 +25,16 @@ class Authentication with ChangeNotifier {
       user = _auth.currentUser;
 
       return "Sign up successful :$user";
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
-
-      }
-      else{
+      } else {
         return e.message;
       }
     }
   }
 
-  static Future<String?> signInWithEmail(String email, String password) async {
+  static Future<List> signInWithEmail(String email, String password) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     User? user;
 
@@ -44,16 +43,13 @@ class Authentication with ChangeNotifier {
         email: email,
         password: password,
       );
-
       user = credential.user;
-
-      return "Sign in successful :$user";
-    } on FirebaseAuthException catch(e) {
+      return ["success", "Sign in successful: ${user?.displayName}"];
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        print('Wrong email or password provided.');
-      }
-      else {
-        return e.message;
+        return ["error", 'Wrong email or password provided.'];
+      } else {
+        return ["error", 'Unknown Error'];
       }
     }
   }
@@ -64,14 +60,15 @@ class Authentication with ChangeNotifier {
 
     try {
       final GoogleSignInAccount? account = await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuthentication = await account!.authentication;
+      final GoogleSignInAuthentication googleAuthentication =
+          await account!.authentication;
 
       AuthCredential credential = GoogleAuthProvider.credential(
           idToken: googleAuthentication.idToken,
-          accessToken: googleAuthentication.accessToken
-      );
+          accessToken: googleAuthentication.accessToken);
 
-      final UserCredential authResult = await _auth.signInWithCredential(credential);
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
       final User? user = authResult.user;
 
       assert(!user!.isAnonymous);
@@ -81,7 +78,7 @@ class Authentication with ChangeNotifier {
       assert(user!.uid == currentUser!.uid);
 
       return "Sign in successful in google :$user";
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       return e.message;
     }
   }
@@ -95,7 +92,7 @@ class Authentication with ChangeNotifier {
       await googleSignIn.signOut();
 
       print("User Sign Out");
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       print(e);
     }
   }
