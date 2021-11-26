@@ -34,10 +34,8 @@ class _EmailSignInState extends State<EmailSignIn> {
         .then((result) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const App()),
-      );
-    }
-    );
+        MaterialPageRoute(builder: (context) => const App()),);
+    });
 
     setState(() {
       userId = _userEmail.text.trim();
@@ -51,12 +49,12 @@ class _EmailSignInState extends State<EmailSignIn> {
       resizeToAvoidBottomInset : true,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('로그인',
+        title: const Text('로그인',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
       ),
@@ -64,111 +62,111 @@ class _EmailSignInState extends State<EmailSignIn> {
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           children: <Widget>[
-              FutureBuilder(
-                future: _loginFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return Form(
-                    key: _formKey,
-                    child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _userEmail,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              labelStyle: TextStyle(color: Colors.indigo),
-                              hintText: 'Enter your email address',
-                              suffixIcon: Icon(
-                                Icons.email,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:BorderSide(
-                                    color: Colors.indigo,
-                                    width: 2.0),
-                              ),
-                            ),
-                            validator: (input) {
-                              if (input!.isEmpty) {
-                                return 'Enter your email address';
-                              } else if (!input.contains('@')) {
-                                return 'Please enter a valid email address!';
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            controller: _userPassword,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: TextStyle(color: Colors.indigo),
-                              hintText: 'Enter your password',
-                              suffixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:BorderSide(
-                                    color: Colors.indigo,
-                                    width: 2.0),
-                              ),
-                            ),
-                            validator: (input) {
-                              if (input!.isEmpty) {
-                                return 'Enter your password';
-                              } else if (input.length < 6) {
-                                return 'Password must be at least 6 characters!';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 60),
-                          IconsButton(
-                              padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                              text: 'Login',
-                              color: Colors.indigo,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadiusDirectional.circular(10),
-                              ),
-                              textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  requestLogIn();
-                                }
-                              }
-                          ),
-                          const SizedBox(height: 30),
-                          GestureDetector(
-                            child: const Text("Don't have an account? SIGN UP!",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline),
-                            ),
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const EmailSignUp()),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+            FutureBuilder(
+              future: _loginFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
-            ],
-          ),
+                }
+                return Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _userEmail,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.indigo),
+                          hintText: 'Enter your email address',
+                          suffixIcon: Icon(
+                            Icons.email,
+                            color: Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:BorderSide(
+                                color: Colors.indigo,
+                                width: 2.0),
+                          ),
+                        ),
+                        validator: (input) {
+                          if (input!.isEmpty) {
+                            return 'Enter your email address';
+                          } else if (!input.contains('@')) {
+                            return 'Please enter a valid email address!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _userPassword,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.indigo),
+                          hintText: 'Enter your password',
+                          suffixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:BorderSide(
+                                color: Colors.indigo,
+                                width: 2.0),
+                          ),
+                        ),
+                        validator: (input) {
+                          if (input!.isEmpty) {
+                            return 'Enter your password';
+                          } else if (input.length < 6) {
+                            return 'Password must be at least 6 characters!';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 60),
+                      IconsButton(
+                          padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+                          text: 'Login',
+                          color: Colors.indigo,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusDirectional.circular(10),
+                          ),
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              requestLogIn();
+                            }
+                          }
+                      ),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        child: const Text("Don't have an account? SIGN UP!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 15,
+                              decoration: TextDecoration.underline),
+                        ),
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const EmailSignUp()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

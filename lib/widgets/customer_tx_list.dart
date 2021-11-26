@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/transactions.dart';
 import "../models/customer.dart";
 import "../models/transaction.dart" as tx;
 import "../screens/customers_tx_add.dart";
@@ -73,13 +72,12 @@ class CustomerTxList extends StatelessWidget {
                           const SizedBox(height: 20),
                           Expanded(
                             child: GridView.builder(
-                                padding: const EdgeInsets.all(10),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 5,
-                                  childAspectRatio: 1.4,
+                                  childAspectRatio: 1.2,
                                 ),
                                 itemCount: txs.length,
                                 itemBuilder: (context, index) {

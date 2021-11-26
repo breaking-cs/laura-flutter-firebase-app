@@ -10,21 +10,20 @@ class CustomerMain extends StatefulWidget {
   @override
   State<CustomerMain> createState() => _CustomerMainState();
 }
-
 class _CustomerMainState extends State<CustomerMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Customers"),
       body: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Expanded(
             child: CustomerList(),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.indigo,
         onPressed: () {
           Navigator.of(context).pushNamed(

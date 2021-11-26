@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import "../widgets/custom_app_bar.dart";
 import '../providers/transactions.dart';
 
 class CustomersTxAdd extends StatefulWidget {

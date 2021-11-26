@@ -1,58 +1,22 @@
+import 'package:app/screens/help.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-
-class CustomCard extends StatelessWidget {
-  final String content;
-
-  const CustomCard({
-    Key? key,
-    required this.content,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      margin: const EdgeInsets.only(
-        bottom: 30,
-        left: 10,
-        right: 10,
-      ),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('150',
-              style: TextStyle(fontSize: 40),),
-            const SizedBox(height: 10),
-            Text(content,
-              style: TextStyle(fontSize: 15),),
-          ],
-        ),
-        padding: const EdgeInsets.all(10),
-      ),
-      elevation: 5,
-    );
-  }
-}
+import 'package:provider/provider.dart';
+import "../models/customer.dart" as cust;
 
 class HomeCard extends StatelessWidget {
   const HomeCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final custs = Provider.of<List<cust.Customer>?>(context);
+
     return Container(
       padding: const EdgeInsets.all(30.0),
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          GridView.count(
+      child: GridView.count(
             padding: const EdgeInsets.only(
               top: 70,
             ),
@@ -62,15 +26,75 @@ class HomeCard extends StatelessWidget {
             crossAxisCount: 2,
             childAspectRatio: MediaQuery.of(context).size.width /
                 (MediaQuery.of(context).size.height / 2),
-            children: const <Widget>[
-              CustomCard(content: 'Visitors'),
-              CustomCard(content: 'Sales'),
-              CustomCard(content: 'Hello'),
-              CustomCard(content: 'Hi'),
+            children: <Widget>[
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                margin: const EdgeInsets.only(
+                  bottom: 30,
+                  left: 10,
+                  right: 10,
+                ),
+                color: Colors.redAccent,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('${custs == null ? 0 : custs.length}',
+                        style: const TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                        ),),
+                      const SizedBox(height: 10),
+                      const Text('Total Customers',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,),),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(18),
+                ),
+                elevation: 5,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                margin: const EdgeInsets.only(
+                  bottom: 30,
+                  left: 10,
+                  right: 10,
+                ),
+                child: Container(
+                  child: InkWell(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const <Widget> [
+                        Text('Need Help?',
+                          style: TextStyle(fontSize: 23),
+                        ),
+                        SizedBox(height: 10),
+                        Text('도움말',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Help()),
+                      );
+                    },
+                  ),
+                  padding: const EdgeInsets.all(18),
+                ),
+                elevation: 5,
+              ),
             ],
           ),
-        ],
-      ),
     );
   }
 }
@@ -102,23 +126,22 @@ class _HomeState extends State<Home> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                        ),
+                        const SizedBox(height: 60,),
                         const Text(
                           'Hello!',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 40,
                           ),
                         ),
+                        const SizedBox(height: 20,),
                         Row(
                           children:[
                             Text(
                             '$currentUserName',
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: 35,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -131,9 +154,7 @@ class _HomeState extends State<Home> {
                             ),
                           ],
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(15),
-                        ),
+                        const SizedBox(height: 70,),
                         const Text(
                           '오늘도\n힘내세요!',
                           style: TextStyle(
@@ -148,10 +169,10 @@ class _HomeState extends State<Home> {
                     fit: StackFit.passthrough,
                     overflow: Overflow.visible,
                     children: [
-                      Container(),
+                      Container(height: 20,),
                       const Positioned(
                         right: 20,
-                        top: -160,
+                        top: -140,
                         child: SizedBox(
                           width: 160,
                           height: 160,
@@ -161,7 +182,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Positioned(
-                        top: -10,
+                        top: 10,
                         left: 20,
                         right: 20,
                         child: Container(
@@ -177,21 +198,36 @@ class _HomeState extends State<Home> {
                               ),
                             ],
                           ),
-                          width: 300,
-                          height: 420,
+                          height: 300,
+                          width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Today,\n$currentTime',
-                              style: const TextStyle(
-                                fontSize: 25,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10,),
+                                const Text(
+                                  'Today,',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                const SizedBox(height: 10,),
+                                Text(
+                                  '$currentTime',
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10,),
                     ],
                   ),
+                  const SizedBox(height: 18,),
                   const HomeCard(),
                 ],
               ),
