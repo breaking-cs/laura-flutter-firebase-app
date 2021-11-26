@@ -9,7 +9,6 @@ import "./screens/app.dart";
 import './screens/customers_tx.dart';
 import './screens/customers_add.dart';
 import './screens/customers_tx_add.dart';
-import './screens/customer_tx_detail.dart';
 import 'providers/customers.dart';
 import './models/customer.dart';
 
@@ -64,7 +63,6 @@ class Main extends StatelessWidget {
             CustomersTransaction.routeName: (context) => const CustomersTransaction(),
             CustomersAdd.routeName: (context) => const CustomersAdd(),
             CustomersTxAdd.routeName: (context) => const CustomersTxAdd(),
-            TxDetail.routeName: (context) => const TxDetail(),
           }),
     );
   }

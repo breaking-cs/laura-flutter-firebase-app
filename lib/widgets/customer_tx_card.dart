@@ -1,8 +1,7 @@
 import 'package:app/utils/date.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import "../screens/customers_tx.dart";
-import '../screens/customer_tx_detail.dart';
 import '../providers/transactions.dart';
 
 class TxCard extends StatelessWidget {
@@ -21,21 +20,54 @@ class TxCard extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: InkWell(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(formatDate(data.createdAt),
-                  style: const TextStyle(fontSize: 15, color: Colors.black),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(formatDate(data.createdAt),
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black
+                      ),
+                    ),
+                    const SizedBox(height: 4,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        data.imgUrl == ""
+                            ? const Text("no image")
+                            : ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            data.imgUrl,
+                            fit: BoxFit.cover,
+                            width: 72,
+                            height: 72,
+                          ),
+                        ),
+                        Text(data.memo,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Text(data.memo),
+                Text("₩ ${data.amount}",
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
               ],
             ),
-            onTap: () => {
-              Navigator.of(context).pushNamed(TxDetail.routeName, arguments: data)
-            },
           ),
         ),
         Positioned(

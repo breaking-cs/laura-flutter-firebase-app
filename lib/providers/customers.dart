@@ -92,23 +92,3 @@ Future<void> deleteCustomer(String hashcode) async {
     return Future.value();
   }
 }
-/*
-Future<void> updateCustomerAmount({
-  required int totalAmount,
-}) async {
-  final User? user = FirebaseAuth.instance.currentUser;
-
-  if (user != null) {
-    String uid = user.uid;
-    CollectionReference? customers =
-    FirebaseFirestore.instance.collection('users/$uid/customers');
-
-    return customers.doc(id)
-        .update({'totalAmount': totalAmount,})
-        .then((val) => print('Updated total amount'))
-        .catchError((error) => print("Failed to total amount: $error"));
-  } else {
-    return Future.value();
-  }
-}
- */
