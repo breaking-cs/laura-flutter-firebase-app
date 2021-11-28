@@ -18,20 +18,19 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
 
-
-  Future<void> requestLogOut() async {
+  void requestLogOut() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      prefs.remove("user_id");
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+        (Route<dynamic> route) => false);
 
-      Authentication.signOut().then((res) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const Login()),
-            (Route<dynamic> route) => false);
-      });
+    await Future.delayed(const Duration(seconds: 2), () {
+      prefs.remove("user_id");
     });
+
+    await Authentication.signOut();
   }
 
   @override
@@ -42,49 +41,51 @@ class _SettingsState extends State<Settings> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 50),
-                  const Text(
-                    'User name',
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 50),
+                const Text(
+                  'User name',
+                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${currentUser!.displayName}',
+                  style: const TextStyle(color: Colors.black, fontSize: 25),
+                ),
+                const SizedBox(height: 40),
+                const Text(
+                  'Email',
+                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${currentUser!.email}',
+                  style: const TextStyle(color: Colors.black, fontSize: 25),
+                ),
+                const SizedBox(height: 50),
+                IconsButton(
+                  padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+                  text: '프로필 수정',
+                  color: Colors.indigo,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusDirectional.circular(10),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '${currentUser!.displayName}',
-                    style: const TextStyle(color: Colors.black, fontSize: 25),
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
                   ),
-                  const SizedBox(height: 40),
-                  const Text(
-                    'Email',
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '${currentUser!.email}',
-                    style: const TextStyle(color: Colors.black, fontSize: 25),
-                  ),
-                  const SizedBox(height: 50),
-                  IconsButton(
-                    padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                    text: '프로필 수정',
-                    color: Colors.indigo,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusDirectional.circular(10),
-                    ),
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const EditProfile()),);
-                    },
-                  ),
-                ],
-              ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfile()),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 50),
           Container(
@@ -109,9 +110,7 @@ class _SettingsState extends State<Settings> {
                     borderRadius: BorderRadiusDirectional.circular(10),
                     side: const BorderSide(color: Colors.grey),
                   ),
-                  textStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20),
+                  textStyle: const TextStyle(color: Colors.grey, fontSize: 20),
                   onPressed: () {
                     Dialogs.materialDialog(
                       msg: '로그아웃 하시겠습니까?',
@@ -150,5 +149,3 @@ class _SettingsState extends State<Settings> {
     );
   }
 }
-
-
