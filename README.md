@@ -7,7 +7,6 @@
 ![cover](./assets/cover.jpeg)
 
 ## About the application
-### Introduction
 
 전국의 꽃집 사장님들의 단 하나뿐인 화훼산업 고객관리 플랫폼, LAURA
 
@@ -25,10 +24,13 @@
 ► 우리 플라워샵만의 포트폴리오 관리
 - 우리 가게에서 판매한 상품 사진을 한눈에 볼 수 있습니다. 크기나 색감을 고르기 어려워하시는 고객님께, 우리 숍만의 포트폴리오를 보여드려 고객 만족도를 높여보세요.
 
-### Screens
-Screenshots:
+### Screenshots:
 
-App in action: 
+![screenshot](./assets/screenshot_1.png)
+
+![screenshot](./assets/screenshot_2.png)
+
+### App in action: 
 
 
 ### Google play download
